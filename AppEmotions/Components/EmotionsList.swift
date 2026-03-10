@@ -1,5 +1,5 @@
 //
-//  CardListItem.swift
+//  EmotionList.swift
 //  CursoiOS-AppEmociones
 //
 //  Created by Equipo 5 on 3/2/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VistaEmotionsList: View {
+struct EmotionsList: View {
     @State var viewModel = VistaEmocionesViewModel()
     
 //    @State private var mostrarEmocion = false
@@ -19,7 +19,6 @@ struct VistaEmotionsList: View {
         ]
     
     var body: some View {
-        NavigationStack {
             ScrollView{
                 LazyVGrid(columns: columnas) {
                     ForEach(viewModel.emociones) { emocion in
@@ -29,28 +28,27 @@ struct VistaEmotionsList: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(Color(red: 0.208, green: 0.247, blue: 0.329))
-                                //                                .fill(emocion.color)
-                                
-                                    VStack {
-                                        Image("ico\(emocion.image)")
-                                            .frame(width: 100, height: 100)
-                                        Text("Hola, soy...")
-                                            .foregroundStyle(Color.white)
-                                        Text(emocion.nombre)
-                                            .foregroundStyle(Color.white)
-                                            .font(.custom("", size: 23))
-                                            .bold()
-                                    }
+                                    
+                                VStack {
+                                    Image("ico\(emocion.image)")
+                                        .frame(width: 100, height: 100)
+                                    Text("Hola, soy...")
+                                        .foregroundStyle(Color.white)
+                                    Text(emocion.nombre)
+                                        .foregroundStyle(Color.white)
+                                        .font(.custom("", size: 23))
+                                        .bold()
+                                }
                                 .padding()
                             }
                         }
                     }
                 }
             }
-        }
+        
     }
 }
 
 #Preview{
-    VistaEmotionsList()
+    EmotionsList()
 }
