@@ -1,24 +1,31 @@
 //
 //  ContentView.swift
-//  AppEmotions
+//  CursoiOS-AppEmociones
 //
-//  Created by Equipo 5 on 5/3/26.
+//  Created by Equipo 5 on 27/1/26.
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
+    @State private var authManager = AuthManager()
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hola Usuario")
+        if authManager.user != nil {
+            VistaMain()
+            
+        } else {
+            VistaLogin(authManager: authManager)
         }
-        .padding()
     }
 }
 
 #Preview {
+//    @Previewable @State var appDataEmociones = VistaEmocionesViewModel()
+    
     ContentView()
+//        .environment(appDataEmociones)
+        
 }

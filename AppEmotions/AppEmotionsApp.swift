@@ -21,12 +21,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct AppEmotionsApp: App {
+//    @State private var appDataEmotions = VistaEmocionesViewModel()
+    
     // register app delegate for Firebase setup
       @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+//                .environment(appDataEmotions)
         }
     }
 }
