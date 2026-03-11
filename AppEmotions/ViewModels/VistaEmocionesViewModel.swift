@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 enum ConstantesFirestore {
     static let coleccionEmociones = "Emociones"
+    static let coleccionRespuestas = "respuestas"
 }
 
 @Observable
@@ -18,6 +19,7 @@ class VistaEmocionesViewModel {
     
     
     var emociones: [Emocion] = []
+    var respuestas: [Respuesta] = []
     
     private var db = Firestore.firestore()
     
@@ -49,6 +51,16 @@ class VistaEmocionesViewModel {
                 print(self.emociones.count)
             }
     }
+    
+    func anadirRespuesta(texto: String, idEmocion: String) {
+        let nuevaRespuesta = Respuesta(texto: texto, idEmocion: idEmocion)
+        do {
+            try db.collection(ConstantesFirestore.coleccionRespuestas).addDocument(from: nuevaRespuesta)
+        } catch {
+            print("Error guardado: \(error)")
+        }
+    }
+    
 }
 
 
