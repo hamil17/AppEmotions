@@ -55,17 +55,6 @@ struct VistaEmotionSingle: View {
                                         .background(Color(red: 0.21, green: 0.91, blue: 0.69))
                                         .cornerRadius(10)
                                 }
-//                                Button {
-//                                    itemSelecionado = 2
-//                                } label: {
-//                                    Text("Gestiónala")
-//                                        .font(.headline)
-//                                        .foregroundColor(Color.white)
-//                                        .padding()
-//                                        .background(Color(red: 0.21, green: 0.91, blue: 0.69))
-//                                        .cornerRadius(10)
-//                                }
-                                
                             }
                             
                         }
@@ -73,13 +62,8 @@ struct VistaEmotionSingle: View {
                             EmocionEntiendela(emocion: emocion)
                         }
                         if (itemSelecionado == 1){
-                            EmocionVivela()
-                            Spacer()
+                            EmocionVivela(emocion:emocion)
                         }
-//                        if(itemSelecionado == 2) {
-//                            Text("Haz selecionado el item gestionar")
-//                            Spacer()
-//                        }
                         
                     }
                     .padding(.vertical, 40)

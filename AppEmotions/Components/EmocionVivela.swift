@@ -16,6 +16,8 @@ struct EmocionVivela: View {
     @State private var mostrarModal = false
     @State private var tag: TagID?
     
+    var emocion:Emocion
+    
     var body: some View {
         let columnas = [
                 GridItem(.flexible(), spacing: 20),
@@ -55,7 +57,7 @@ struct EmocionVivela: View {
         }
         .sheet(item: $tag, content: { item in
             if item.id == 1 {
-                VistaAnaliza()
+                VistaAnaliza(emocion:emocion)
             }
             if item.id == 2 {
                 Text("Vista Medita")
@@ -67,6 +69,8 @@ struct EmocionVivela: View {
                 Text("Vista Siente")
             }
         })
+        
+        Spacer()
         
 //        .sheet(isPresented: $mostrarModal) {
 //            Button{
@@ -91,5 +95,5 @@ struct EmocionVivela: View {
 }
 
 #Preview {
-    EmocionVivela()
+    EmocionVivela(emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria"))
 }
