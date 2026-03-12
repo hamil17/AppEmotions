@@ -15,8 +15,9 @@ struct Emocion: Identifiable, Codable {
     var descripcion: String
     var color: String
     var image: String
+    var sonido: String
     
     enum CodingKeys: String, CodingKey {
-        case id, nombre, descripcion, color, image
+        case id, nombre, descripcion, color, image, sonido
     }
 }
