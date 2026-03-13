@@ -20,10 +20,10 @@ struct EmocionVivela: View {
     
     var body: some View {
         let columnas = [
-                GridItem(.flexible(), spacing: 20),
-                GridItem(.flexible(), spacing: 20),
-                GridItem(.flexible(), spacing: 20)
-            ]
+            GridItem(.flexible(), spacing: 20),
+            GridItem(.flexible(), spacing: 20),
+            GridItem(.flexible(), spacing: 20)
+        ]
         
         LazyVGrid(columns: columnas, spacing: 10) {
             Button{
@@ -39,21 +39,20 @@ struct EmocionVivela: View {
             } label: {
                 SquareButton(image: "icoSun", text: "Medita")
             }
-            Button{
-                mostrarModal = true
-                tag = TagID(id: 3)
-            } label: {
-                SquareButton(image: "icoArrow", text: "Ejercita")
-            }
             
-            Button{
-                mostrarModal = true
-                tag = TagID(id: 4)
-            } label: {
-                SquareButton(image: "icoFlower", text: "Siente")
-            }
+//            Button{
+//                mostrarModal = true
+//                tag = TagID(id: 3)
+//            } label: {
+//                SquareButton(image: "icoArrow", text: "Ejercita")
+//            }
             
-            
+//            Button{
+//                mostrarModal = true
+//                tag = TagID(id: 4)
+//            } label: {
+//                SquareButton(image: "icoFlower", text: "Siente")
+//            }
         }
         .sheet(item: $tag, content: { item in
             if item.id == 1 {
@@ -71,26 +70,6 @@ struct EmocionVivela: View {
         })
         
         Spacer()
-        
-//        .sheet(isPresented: $mostrarModal) {
-//            Button{
-//                dismiss()
-//            }label: {
-//                Image(systemName: "x.cicle")
-//            }
-//            switch tag {
-//                case 1:
-//                    VistaAnaliza()
-//                case 2:
-//                    Text("Modal Medita")
-//                case 3:
-//                    Text("Modal Ejercita")
-//                case 4:
-//                    Text("Modal Siente")
-//                default:
-//                    Text("Nada selecionado")
-//            }
-//        }
     }
 }
 

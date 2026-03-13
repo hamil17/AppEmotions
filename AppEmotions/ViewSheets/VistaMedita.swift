@@ -4,13 +4,18 @@ import AVFoundation
 
 struct VistaMedita: View {
     @Environment(\.dismiss) var dismiss
-    var reproductor = ReproductorViewModel()
+    @State var reproductor = ReproductorViewModel()
     
     var emocion:Emocion
     
     // URL ejemplo de música relax gratuita (Free Music Archive)
-//    let urlMusica = URL(string: emocion.sonido)
-    let urlMusica = URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/jQ4du0HGj6kB3A7I0CkL8Y8AfymQOK9V4zMVgfDl.mp3")!
+    let urlMusica: URL
+//    let urlMusica = URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/jQ4du0HGj6kB3A7I0CkL8Y8AfymQOK9V4zMVgfDl.mp3")!
+    
+    init(emocion: Emocion) {
+        self.emocion = emocion
+        urlMusica = URL(string: emocion.sonido)!
+    }
     
     var body: some View {
         VStack(spacing: 30) {
@@ -33,15 +38,6 @@ struct VistaMedita: View {
                         Image("iconPlay")
                     }
                 }
-//                Button(reproductor.isPlaying ? "⏸️ Pausa" : "▶️ Reproducir") {
-//                    reproductor.togglePlayPause()
-//                }
-//                .buttonStyle(.borderedProminent)
-                
-//                Button("⏹️ Stop") {
-//                    reproductor.stop()
-//                }
-//                .buttonStyle(.bordered)
             }
             
             // Barra de progreso (opcional)
@@ -56,16 +52,17 @@ struct VistaMedita: View {
                 dismiss()
             }
             .buttonStyle(.borderedProminent)
-            .tint(.red)
+            .tint(.black)
         }
         .padding()
         .background(Color(red: 0.208, green: 0.247, blue: 0.329))
         .onAppear {
+            print("URL música: \(urlMusica)")
             reproductor.setup(url: urlMusica)
         }
-//        .onDisappear {
-//            reproductor.stop()
-//        }
+        .onDisappear {
+            reproductor.stop()
+        }
     }
 }
 

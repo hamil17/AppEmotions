@@ -37,7 +37,7 @@ struct VistaEmotionSingle: View {
                                 Button {
                                     itemSelecionado = 0
                                 } label: {
-                                    Text("Entiéndela")
+                                    Text("Entenderla")
                                         .font(.headline)
                                         .foregroundColor(Color.white)
                                         .padding()
@@ -48,7 +48,17 @@ struct VistaEmotionSingle: View {
                                 Button {
                                     itemSelecionado = 1
                                 } label: {
-                                    Text("Vívela")
+                                    Text("Vivirla")
+                                        .font(.headline)
+                                        .foregroundColor(Color.white)
+                                        .padding()
+                                        .background(Color(red: 0.21, green: 0.91, blue: 0.69))
+                                        .cornerRadius(10)
+                                }
+                                Button {
+                                    itemSelecionado = 2
+                                } label: {
+                                    Text("Gestionarla")
                                         .font(.headline)
                                         .foregroundColor(Color.white)
                                         .padding()
@@ -64,10 +74,13 @@ struct VistaEmotionSingle: View {
                         if (itemSelecionado == 1){
                             EmocionVivela(emocion:emocion)
                         }
+                        if (itemSelecionado == 2){
+                            EmocionGestionala(emocion:emocion)
+                        }
                         
                     }
                     .padding(.vertical, 40)
-                    .padding(.leading, 30)
+                    .padding(30)
                 }
                 .frame(
                     maxWidth: .infinity,
