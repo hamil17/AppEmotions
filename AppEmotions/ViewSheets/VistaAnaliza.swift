@@ -28,22 +28,26 @@ struct VistaAnaliza: View {
                 .background(.white)
                 .cornerRadius(20)
                 .frame(height: 300)
-            Button("Guardar"){
-                viewModel.anadirRespuesta(texto: respuestaEmocion, idEmocion: emocion.id ?? "No ID = desde el canvas")
-                dismiss()
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(Color(red: 0.235, green: 0.918, blue: 0.663))
-            .foregroundStyle(.black)
-            .disabled(respuestaEmocion.isEmpty)
+            
             
             Spacer()
             
-            Button("Cerrar") {
-                dismiss()
+            HStack{
+                Button("Cerrar") {
+                    dismiss()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.black)
+                Button("Guardar"){
+                    viewModel.anadirRespuesta(texto: respuestaEmocion, idEmocion: emocion.id ?? "No ID = desde el canvas")
+                    dismiss()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(Color(red: 0.235, green: 0.918, blue: 0.663))
+                .foregroundStyle(.black)
+                .disabled(respuestaEmocion.isEmpty)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.black)
+            
         }
         .padding()
         .background(Color(red: 0.208, green: 0.247, blue: 0.329))

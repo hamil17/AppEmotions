@@ -11,6 +11,7 @@ struct VistaMain: View {
 //    @Environment(VistaEmocionesViewModel.self) var appDataEmociones
 //    @State private var authManager = AuthManager()
     @State var viewModel = EmocionesViewModel()
+    @State var loginViewModel: LoginViewModel
     
     let columnas = [
             GridItem(.flexible()),
@@ -21,24 +22,10 @@ struct VistaMain: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    // Fila titulo + buscador
-                    HStack {
-                        Text("Emociones")
-                            .font(.largeTitle)
-                            .bold()
-                        Spacer()
-                        Image(systemName: "magnifyingglass")
-                            .font(Font.system(size: 25))
-                            .padding(10)
-                            .background(Color.yellow)
-                            .cornerRadius(15)
-                    }
-                    .padding(20)
-                    .padding(.top, 60)
-                    // imagen principal por ahora pongo el icono
-                    VStack {
-                        Image("imgMain")
-                    }
+                   // Imagen principal
+                    Image("imgMain")
+                        .padding(.top, 180)
+                    
                     // Texto
                     VStack {
                         ZStack {
@@ -65,7 +52,6 @@ struct VistaMain: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
                                             .fill(Color(red: 0.208, green: 0.247, blue: 0.329))
-                                            
                                         VStack {
                                             Image("ico\(emocion.image)")
                                                 .frame(width: 100, height: 100)
@@ -90,13 +76,34 @@ struct VistaMain: View {
             .frame(maxHeight: .infinity)
             .background(.gray.opacity(0.5))
             .ignoresSafeArea()
+            .navigationTitle("EmotionsConnect")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu{
+                        NavigationLink {
+                            VistaDashboard()
+                        } label : {
+                            HStack {
+                                Text("Ver registros")
+                                Image(systemName: "pencil")
+                            }
+//                            Text("Ver registros", systemImage: "pencil")
+                        }
+                        Divider()
+                        Button ("Cerrar sesion", systemImage: "plus.square.on.square", role:.destructive) {
+                            loginViewModel.logout()
+                        }
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease")
+                    }
+                }
+            }
         }
     }
 }
 
 #Preview {
-//    @Previewable @State var dataEmociones = VistaEmocionesViewModel()
-    VistaMain()
-//        .environment(dataEmociones)
+    var loginViewModel = LoginViewModel()
+    VistaMain(loginViewModel: loginViewModel)
         
 }

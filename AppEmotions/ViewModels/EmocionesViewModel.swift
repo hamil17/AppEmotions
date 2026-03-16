@@ -12,6 +12,7 @@ import FirebaseFirestore
 enum ConstantesFirestore {
     static let coleccionEmociones = "Emociones"
     static let coleccionRespuestas = "respuestas"
+    static let coleccionRegistros = "registros"
 }
 
 @Observable
@@ -53,7 +54,6 @@ class EmocionesViewModel {
     }
     
     func cargarRespuesta(idEmocion: String, bindingTexto: Binding<String>) {
-        let db = Firestore.firestore()
         let docRef = db.collection(ConstantesFirestore.coleccionRespuestas)
             .document(idEmocion)
         
@@ -75,7 +75,6 @@ class EmocionesViewModel {
     }
     
     func anadirRespuesta(texto: String, idEmocion: String) {
-        let db = Firestore.firestore()
         
         // 1. Referencia al documento fijo para esa emoción
         let docRef = db.collection(ConstantesFirestore.coleccionRespuestas)
@@ -95,6 +94,25 @@ class EmocionesViewModel {
             } else {
                 print("Respuesta guardada/actualizada correctamente")
             }
+        }
+    }
+    
+    func anadirRegistro(fecha: Date, situacion:String,pensamientos:String, emociones:String, conducta:String, nivelMalestar:Double, idEmocion:String){
+        let docRef = db.collection(ConstantesFirestore.coleccionRegistros)
+        
+        let nuevoRegistro = Registro(fecha: fecha,
+                                     situacion: situacion,
+                                     pensamientos: pensamientos,
+                                     emociones: emociones,
+                                     conducta: conducta,
+                                     nivelMalestar: nivelMalestar,
+                                     idEmocion: idEmocion)
+        
+        
+        do {
+            try docRef.addDocument(from: nuevoRegistro)
+        } catch {
+            print("Error guardado: \(error)")
         }
     }
 

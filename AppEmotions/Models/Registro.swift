@@ -8,13 +8,18 @@
 import Foundation
 import FirebaseFirestore
 
-struct Respuesta: Identifiable, Codable {
+struct Registro: Identifiable, Codable {
     @DocumentID var id: String?
     
-    var texto: String
+    var fecha: Date
+    var situacion: String
+    var pensamientos: String
+    var emociones: String
+    var conducta: String
+    var nivelMalestar: Double
     var idEmocion: String
     
     enum CodingKeys: String, CodingKey {
-        case texto, idEmocion
+        case fecha, situacion, pensamientos, emociones, conducta, nivelMalestar, idEmocion
     }
 }

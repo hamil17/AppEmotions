@@ -27,7 +27,7 @@ struct EmocionGestionala: View {
             }
         }
         .sheet(isPresented: $mostrarModal){
-            VistaRegistroMalestar()
+            VistaRegistroMalestar(emocion:emocion)
         }
         Spacer()
     }

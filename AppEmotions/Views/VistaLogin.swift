@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct VistaLogin: View {
-    @Bindable var authManager : AuthManager
+    @Bindable var loginViewModel : LoginViewModel
     
     @State private var email: String = ""
     @State private var password: String = ""
@@ -68,9 +68,9 @@ struct VistaLogin: View {
     func autenticar() async {
         do{
             if seEstaRegistrando{
-                try await authManager.register(email: email, pass: password)
+                try await loginViewModel.register(email: email, pass: password)
             }else{
-                try await authManager.login(email: email, pass: password)
+                try await loginViewModel.login(email: email, pass: password)
             }
             logeando = false
         } catch {

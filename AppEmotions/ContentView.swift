@@ -9,15 +9,15 @@ import SwiftUI
 import FirebaseAuth
 
 struct ContentView: View {
-    @State private var authManager = AuthManager()
+    @State private var loginViewModel = LoginViewModel()
     
     
     var body: some View {
-        if authManager.user != nil {
-            VistaMain()
+        if loginViewModel.user != nil {
+            VistaMain(loginViewModel: loginViewModel)
             
         } else {
-            VistaLogin(authManager: authManager)
+            VistaLogin(loginViewModel: loginViewModel)
         }
     }
 }

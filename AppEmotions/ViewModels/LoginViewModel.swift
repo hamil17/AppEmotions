@@ -9,11 +9,11 @@ import Foundation
 import FirebaseAuth
 
 @Observable
-class AuthManager {
+class LoginViewModel {
     var user: User? // tipo de variable de firebase
     
     init() {
-        // Asigna el ususrioa si hay sesión guardada
+        // Asigna el ususrio a si hay sesión guardada
         user = Auth.auth().currentUser
     }
     

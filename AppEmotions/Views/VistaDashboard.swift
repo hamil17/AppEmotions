@@ -7,12 +7,18 @@
 
 import SwiftUI
 
-struct VistaRegistros: View {
+struct VistaDashboard: View {
+    var date = Date()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            VStack {
+                Text("Aqui info de dashboard")
+//                date.description
+//                .navigationTitle("Panel")
+        }
     }
 }
 
 #Preview {
-    VistaRegistros()
+    VistaDashboard()
 }
