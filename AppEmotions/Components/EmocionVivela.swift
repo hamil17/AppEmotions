@@ -60,7 +60,7 @@ struct EmocionVivela: View {
                 VistaAnaliza(uid: uid, emocion: emocion)
             }
             if item.id == 2 {
-                VistaMedita(emocion: emocion)
+                VistaMedita(uid: uid, emocion: emocion)
             }
             if item.id == 3 {
                 Text("Vista Ejercita")

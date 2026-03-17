@@ -10,6 +10,7 @@ import SwiftUI
 struct VistaAnaliza: View {
     @Environment(\.dismiss) var dismiss
     @State var viewModel = EmocionesViewModel()
+    @State private var dailyStats = DailyStatsViewModel()
     @State private var respuestaEmocion: String = ""
     
     let uid: String
@@ -45,6 +46,7 @@ struct VistaAnaliza: View {
                         texto: respuestaEmocion,
                         idEmocion: emocion.id ?? "No ID = desde el canvas"
                     )
+                    dailyStats.markTask(uid: uid, task: .didAnalyze)
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)

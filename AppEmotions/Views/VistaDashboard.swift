@@ -9,7 +9,6 @@ import SwiftUI
 import Charts
 
 struct VistaDashboard: View {
-    @State private var valor = 50.0
     @State private var mostrarModal = false
 
     let uid: String
@@ -38,9 +37,14 @@ struct VistaDashboard: View {
                                 
                             }
                         }
-                        Slider(value: $valor,in: 0...100, step: 10)
-                            .tint(Color.customBlue)
-                        Text("tu progreso hoy es del \(Int(valor))%")
+                        Slider(
+                            value: .constant(dailyStats.todayProgress),
+                            in: 0...100,
+                            step: 1
+                        )
+                        .tint(Color.customBlue)
+                        .disabled(true)
+                        Text("tu progreso hoy es del \(Int(dailyStats.todayProgress))% (\(dailyStats.todayTasksCompleted)/5 tareas)")
                     }
                     .padding()
 
@@ -104,6 +108,8 @@ struct VistaDashboard: View {
         .background(.gray.opacity(0.5))
         .ignoresSafeArea()
         .onAppear {
+            dailyStats.markTask(uid: uid, task: .didOpenDashboard)
+            dailyStats.listenToday(uid: uid)
             dailyStats.listenRecentAccess(uid: uid)
         }
         

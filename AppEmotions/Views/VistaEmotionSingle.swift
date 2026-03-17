@@ -10,6 +10,7 @@ import SwiftUI
 struct VistaEmotionSingle: View {
     
     @State private var itemSelecionado = 0
+    @State private var dailyStats = DailyStatsViewModel()
     
     let uid: String
     let emocion:Emocion
@@ -91,6 +92,9 @@ struct VistaEmotionSingle: View {
                 }
                 .background(.gray.opacity(0.5))
             
+    }
+    .onAppear {
+        dailyStats.markTask(uid: uid, task: .didExploreEmotion)
     }
 }
 

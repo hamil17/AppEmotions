@@ -11,6 +11,7 @@ struct VistaRegistroMalestar: View {
     @Environment(\.dismiss) var dismiss
     
     @State var viewModel = EmocionesViewModel()
+    @State private var dailyStats = DailyStatsViewModel()
     
     @State private var fecha: Date = Date()
     @State private var situacion: String = ""
@@ -85,6 +86,7 @@ struct VistaRegistroMalestar: View {
                         nivelMalestar: nivelMalestar,
                         idEmocion: emocion.id ?? "No ID = desde el canvas"
                     )
+                    dailyStats.markTask(uid: uid, task: .didRegisterMalestar)
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)

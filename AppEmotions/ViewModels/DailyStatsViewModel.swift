@@ -8,15 +8,27 @@ struct DailyAccessStat: Identifiable {
     let accessCount: Int
 }
 
+enum DailyTaskId: String, CaseIterable {
+    case didAnalyze
+    case didMeditate30s
+    case didRegisterMalestar
+    case didOpenDashboard
+    case didExploreEmotion
+}
+
 @Observable
 final class DailyStatsViewModel {
     private let db = Firestore.firestore()
-    private var listener: ListenerRegistration?
+    private var recentListener: ListenerRegistration?
+    private var todayListener: ListenerRegistration?
     
     var recentAccessStats: [DailyAccessStat] = []
+    var todayProgress: Double = 0
+    var todayTasksCompleted: Int = 0
     
     deinit {
-        listener?.remove()
+        recentListener?.remove()
+        todayListener?.remove()
     }
     
     static func dayKey(for date: Date, calendar: Calendar = .current) -> String {
@@ -53,10 +65,53 @@ final class DailyStatsViewModel {
         }
     }
     
-    func listenRecentAccess(uid: String, limit: Int = 14) {
-        listener?.remove()
+    func markTask(uid: String, task: DailyTaskId, date: Date = Date(), calendar: Calendar = .current) {
+        let startOfDay = calendar.startOfDay(for: date)
+        let key = Self.dayKey(for: date, calendar: calendar)
         
-        listener = db
+        let docRef = db
+            .collection("users")
+            .document(uid)
+            .collection("daily")
+            .document(key)
+        
+        db.runTransaction({ transaction, errorPointer in
+            let snapshot: DocumentSnapshot
+            do {
+                snapshot = try transaction.getDocument(docRef)
+            } catch let error as NSError {
+                errorPointer?.pointee = error
+                return nil
+            }
+            
+            let existingTasks = (snapshot.data()?["tasks"] as? [String: Bool]) ?? [:]
+            var tasks = existingTasks
+            tasks[task.rawValue] = true
+            
+            let completed = tasks.values.filter { $0 }.count
+            let progress = min(100.0, (Double(completed) / Double(DailyTaskId.allCases.count)) * 100.0)
+            
+            transaction.setData([
+                "dayKey": key,
+                "date": Timestamp(date: startOfDay),
+                "tasks": tasks,
+                "tasksCompleted": completed,
+                "progress": progress,
+                "updatedAt": FieldValue.serverTimestamp()
+            ], forDocument: docRef, merge: true)
+            
+            return nil
+        }) { _, error in
+            if let error {
+                print("Error marcando tarea diaria: \(error)")
+            }
+        }
+    }
+    
+    func listenRecentAccess(uid: String, limit: Int = 14) {
+        recentListener?.remove()
+        
+        recentListener = db
             .collection("users")
             .document(uid)
             .collection("daily")
@@ -93,6 +148,49 @@ final class DailyStatsViewModel {
                 // Orden cronológico para graficar de izq->der
                 self.recentAccessStats = mapped.sorted(by: { $0.date < $1.date })
             }
+    }
+    
+    func listenToday(uid: String, date: Date = Date(), calendar: Calendar = .current) {
+        todayListener?.remove()
+        
+        let key = Self.dayKey(for: date, calendar: calendar)
+        let docRef = db
+            .collection("users")
+            .document(uid)
+            .collection("daily")
+            .document(key)
+        
+        todayListener = docRef.addSnapshotListener { [weak self] snapshot, error in
+            guard let self else { return }
+            
+            if let error {
+                print("Error leyendo daily hoy: \(error)")
+                self.todayProgress = 0
+                self.todayTasksCompleted = 0
+                return
+            }
+            
+            guard let data = snapshot?.data() else {
+                self.todayProgress = 0
+                self.todayTasksCompleted = 0
+                return
+            }
+            
+            let progressAny = data["progress"]
+            let progress =
+                (progressAny as? Double)
+                ?? (progressAny as? Int).map(Double.init)
+                ?? 0
+            
+            let tasksCompletedAny = data["tasksCompleted"]
+            let tasksCompleted =
+                (tasksCompletedAny as? Int)
+                ?? (tasksCompletedAny as? Int64).map(Int.init)
+                ?? 0
+            
+            self.todayProgress = progress
+            self.todayTasksCompleted = tasksCompleted
+        }
     }
 }
 
