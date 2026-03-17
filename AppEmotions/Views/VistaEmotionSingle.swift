@@ -16,26 +16,23 @@ struct VistaEmotionSingle: View {
     let emocion:Emocion
     
     var body: some View {
-        ScrollView{
-                VStack {
-                    Text(emocion.nombre)
-                        .font(.largeTitle)
-                        .bold()
-                }
-//                .padding(.top, 80)
-                VStack {
-                    Image ("ico\(emocion.image)")
-                }
-                .padding(.bottom, 20)
-            
+        ScrollView {
+            VStack {
+                Text(emocion.nombre)
+                    .font(.largeTitle)
+                    .bold()
+                
+                Image("ico\(emocion.image)")
+                    .padding(.bottom, 20)
+                
                 ZStack {
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color.customBlue)
                         .frame(height: 700)
-                        
+                    
                     VStack(alignment: .leading, spacing: 30) {
-                        ScrollView(.horizontal){
-                            HStack (spacing: 30){
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 30) {
                                 Button {
                                     itemSelecionado = 0
                                 } label: {
@@ -45,8 +42,8 @@ struct VistaEmotionSingle: View {
                                         .padding()
                                         .background(Color.customGreen)
                                         .cornerRadius(10)
-
                                 }
+                                
                                 Button {
                                     itemSelecionado = 1
                                 } label: {
@@ -57,6 +54,7 @@ struct VistaEmotionSingle: View {
                                         .background(Color.customGreen)
                                         .cornerRadius(10)
                                 }
+                                
                                 Button {
                                     itemSelecionado = 2
                                 } label: {
@@ -68,34 +66,26 @@ struct VistaEmotionSingle: View {
                                         .cornerRadius(10)
                                 }
                             }
-                            
-                        }
-                        if (itemSelecionado == 0) {
-                            EmocionEntiendela(emocion: emocion)
-                        }
-                        if (itemSelecionado == 1){
-                            EmocionVivela(uid: uid, emocion: emocion)
-                        }
-                        if (itemSelecionado == 2){
-                            EmocionGestionala(uid: uid, emocion: emocion)
                         }
                         
+                        if itemSelecionado == 0 {
+                            EmocionEntiendela(emocion: emocion)
+                        } else if itemSelecionado == 1 {
+                            EmocionVivela(uid: uid, emocion: emocion)
+                        } else {
+                            EmocionGestionala(uid: uid, emocion: emocion)
+                        }
                     }
                     .padding(.vertical, 40)
                     .padding(30)
                 }
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity
-                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
-                }
-                .background(.gray.opacity(0.5))
-            
+            }
+            .frame(maxWidth: .infinity)
         }
-        .onAppear {
-            dailyStats.markTask(uid: uid, task: .didExploreEmotion)
-        }
+        .background(.gray.opacity(0.5))
+        .onAppear { dailyStats.markTask(uid: uid, task: .didExploreEmotion) }
     }
 }
 
