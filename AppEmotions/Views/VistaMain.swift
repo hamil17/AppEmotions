@@ -11,6 +11,7 @@ struct VistaMain: View {
 //    @Environment(VistaEmocionesViewModel.self) var appDataEmociones
 //    @State private var authManager = AuthManager()
     @State var viewModel = EmocionesViewModel()
+    @State private var dailyStats = DailyStatsViewModel()
     let uid: String
     @State var loginViewModel: LoginViewModel
     
@@ -82,7 +83,7 @@ struct VistaMain: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu{
                         NavigationLink {
-                            VistaDashboard()
+                            VistaDashboard(uid: uid)
                         } label : {
                             HStack {
                                 Text("Dashboard")
@@ -99,6 +100,9 @@ struct VistaMain: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            dailyStats.trackMainAccess(uid: uid)
         }
     }
 }

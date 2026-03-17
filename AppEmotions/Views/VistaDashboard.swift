@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import Charts
 
 struct VistaDashboard: View {
     @State private var valor = 50.0
     @State private var mostrarModal = false
+
+    let uid: String
+    @State private var dailyStats = DailyStatsViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -39,6 +43,26 @@ struct VistaDashboard: View {
                         Text("tu progreso hoy es del \(Int(valor))%")
                     }
                     .padding()
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Accesos por día")
+                            .font(.headline)
+                        
+                        if dailyStats.recentAccessStats.isEmpty {
+                            Text("Aún no hay datos.")
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Chart(dailyStats.recentAccessStats) { item in
+                                BarMark(
+                                    x: .value("Día", item.date, unit: .day),
+                                    y: .value("Accesos", item.accessCount)
+                                )
+                                .foregroundStyle(Color.customBlue)
+                            }
+                            .frame(height: 160)
+                        }
+                    }
+                    .padding(.horizontal)
                     
                     ZStack {
                         RoundedRectangle(cornerRadius: 30)
@@ -79,11 +103,14 @@ struct VistaDashboard: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.gray.opacity(0.5))
         .ignoresSafeArea()
+        .onAppear {
+            dailyStats.listenRecentAccess(uid: uid)
+        }
         
             
     }
 }
 
 #Preview {
-    VistaDashboard()
+    VistaDashboard(uid: "preview-uid")
 }
