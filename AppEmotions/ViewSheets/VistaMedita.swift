@@ -1,6 +1,7 @@
 import SwiftUI
 import AVKit
 import AVFoundation
+import Combine
 
 struct VistaMedita: View {
     @Environment(\.dismiss) var dismiss
