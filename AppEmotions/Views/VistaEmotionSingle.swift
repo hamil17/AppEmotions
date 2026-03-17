@@ -96,6 +96,7 @@ struct VistaEmotionSingle: View {
         .onAppear {
             dailyStats.markTask(uid: uid, task: .didExploreEmotion)
         }
+    }
 }
 
 #Preview {
