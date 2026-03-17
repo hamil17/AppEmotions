@@ -16,6 +16,7 @@ struct EmocionVivela: View {
     @State private var mostrarModal = false
     @State private var tag: TagID?
     
+    let uid: String
     var emocion:Emocion
     
     var body: some View {
@@ -56,10 +57,10 @@ struct EmocionVivela: View {
         }
         .sheet(item: $tag, content: { item in
             if item.id == 1 {
-                VistaAnaliza(emocion:emocion)
+                VistaAnaliza(uid: uid, emocion: emocion)
             }
             if item.id == 2 {
-                VistaMedita(emocion:emocion)
+                VistaMedita(emocion: emocion)
             }
             if item.id == 3 {
                 Text("Vista Ejercita")
@@ -74,5 +75,5 @@ struct EmocionVivela: View {
 }
 
 #Preview {
-    EmocionVivela(emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
+    EmocionVivela(uid: "preview-uid", emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
 }

@@ -11,6 +11,7 @@ struct VistaMain: View {
 //    @Environment(VistaEmocionesViewModel.self) var appDataEmociones
 //    @State private var authManager = AuthManager()
     @State var viewModel = EmocionesViewModel()
+    let uid: String
     @State var loginViewModel: LoginViewModel
     
     let columnas = [
@@ -47,7 +48,7 @@ struct VistaMain: View {
                         LazyVGrid(columns: columnas) {
                             ForEach(viewModel.emociones) { emocion in
                                 NavigationLink {
-                                    VistaEmotionSingle(emocion: emocion)
+                                    VistaEmotionSingle(uid: uid, emocion: emocion)
                                 } label: {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
@@ -104,6 +105,6 @@ struct VistaMain: View {
 
 #Preview {
     let loginViewModel = LoginViewModel()
-    VistaMain(loginViewModel: loginViewModel)
+    VistaMain(uid: "preview-uid", loginViewModel: loginViewModel)
         
 }

@@ -19,6 +19,7 @@ struct VistaRegistroMalestar: View {
     @State private var conducta: String = ""
     @State private var nivelMalestar: Double = 0.0
     
+    let uid: String
     var emocion:Emocion
     
     var body: some View {
@@ -74,7 +75,16 @@ struct VistaRegistroMalestar: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
                 Button("Guardar") {
-                    viewModel.anadirRegistro(fecha:fecha, situacion: situacion, pensamientos: pensamientos, emociones: emociones, conducta: conducta, nivelMalestar: nivelMalestar, idEmocion: emocion.id ?? "No ID = desde el canvas")
+                    viewModel.anadirRegistro(
+                        uid: uid,
+                        fecha: fecha,
+                        situacion: situacion,
+                        pensamientos: pensamientos,
+                        emociones: emociones,
+                        conducta: conducta,
+                        nivelMalestar: nivelMalestar,
+                        idEmocion: emocion.id ?? "No ID = desde el canvas"
+                    )
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -90,5 +100,5 @@ struct VistaRegistroMalestar: View {
 }
 
 #Preview {
-    VistaRegistroMalestar(emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
+    VistaRegistroMalestar(uid: "preview-uid", emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
 }

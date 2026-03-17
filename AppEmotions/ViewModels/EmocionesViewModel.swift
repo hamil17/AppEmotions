@@ -27,6 +27,18 @@ class EmocionesViewModel {
     init(){
         escucharDatos()
     }
+
+    private func userRef(uid: String) -> DocumentReference {
+        db.collection("users").document(uid)
+    }
+    
+    private func respuestasRef(uid: String) -> CollectionReference {
+        userRef(uid: uid).collection(ConstantesFirestore.coleccionRespuestas)
+    }
+    
+    private func registrosRef(uid: String) -> CollectionReference {
+        userRef(uid: uid).collection(ConstantesFirestore.coleccionRegistros)
+    }
     
     func escucharDatos(){
         // Consulta a "Emociones" en Firestore,  usando el idUsuario
@@ -53,9 +65,8 @@ class EmocionesViewModel {
             }
     }
     
-    func cargarRespuesta(idEmocion: String, bindingTexto: Binding<String>) {
-        let docRef = db.collection(ConstantesFirestore.coleccionRespuestas)
-            .document(idEmocion)
+    func cargarRespuesta(uid: String, idEmocion: String, bindingTexto: Binding<String>) {
+        let docRef = respuestasRef(uid: uid).document(idEmocion)
         
         // Listener en tiempo real: carga inicial + cambios futuros
         docRef.addSnapshotListener { snapshot, error in
@@ -74,11 +85,10 @@ class EmocionesViewModel {
         }
     }
     
-    func anadirRespuesta(texto: String, idEmocion: String) {
+    func anadirRespuesta(uid: String, texto: String, idEmocion: String) {
         
         // 1. Referencia al documento fijo para esa emoción
-        let docRef = db.collection(ConstantesFirestore.coleccionRespuestas)
-            .document(idEmocion)
+        let docRef = respuestasRef(uid: uid).document(idEmocion)
         
         // 2. Datos a guardar (ejemplo sencillo)
         let data: [String: Any] = [
@@ -97,8 +107,8 @@ class EmocionesViewModel {
         }
     }
     
-    func anadirRegistro(fecha: Date, situacion:String,pensamientos:String, emociones:String, conducta:String, nivelMalestar:Double, idEmocion:String){
-        let docRef = db.collection(ConstantesFirestore.coleccionRegistros)
+    func anadirRegistro(uid: String, fecha: Date, situacion:String,pensamientos:String, emociones:String, conducta:String, nivelMalestar:Double, idEmocion:String){
+        let docRef = registrosRef(uid: uid)
         
         let nuevoRegistro = Registro(fecha: fecha,
                                      situacion: situacion,

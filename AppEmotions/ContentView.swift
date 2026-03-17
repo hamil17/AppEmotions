@@ -13,9 +13,8 @@ struct ContentView: View {
     
     
     var body: some View {
-        if loginViewModel.user != nil {
-            VistaMain(loginViewModel: loginViewModel)
-            
+        if let uid = loginViewModel.uid {
+            VistaMain(uid: uid, loginViewModel: loginViewModel)
         } else {
             VistaLogin(loginViewModel: loginViewModel)
         }

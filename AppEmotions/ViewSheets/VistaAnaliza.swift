@@ -12,6 +12,7 @@ struct VistaAnaliza: View {
     @State var viewModel = EmocionesViewModel()
     @State private var respuestaEmocion: String = ""
     
+    let uid: String
     var emocion:Emocion
     
     var body: some View {
@@ -39,7 +40,11 @@ struct VistaAnaliza: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
                 Button("Guardar"){
-                    viewModel.anadirRespuesta(texto: respuestaEmocion, idEmocion: emocion.id ?? "No ID = desde el canvas")
+                    viewModel.anadirRespuesta(
+                        uid: uid,
+                        texto: respuestaEmocion,
+                        idEmocion: emocion.id ?? "No ID = desde el canvas"
+                    )
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -53,11 +58,15 @@ struct VistaAnaliza: View {
         .background(Color.customBlue)
         .onAppear(){
             // Carga al entrar en la vista
-            viewModel.cargarRespuesta(idEmocion: emocion.id ?? "No ID", bindingTexto: $respuestaEmocion)
+            viewModel.cargarRespuesta(
+                uid: uid,
+                idEmocion: emocion.id ?? "No ID",
+                bindingTexto: $respuestaEmocion
+            )
         }
     }
 }
 
 #Preview {
-    VistaAnaliza(emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
+    VistaAnaliza(uid: "preview-uid", emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
 }
