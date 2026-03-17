@@ -28,7 +28,7 @@ struct VistaEmotionSingle: View {
             
                 ZStack {
                     RoundedRectangle(cornerRadius: 30)
-                        .fill(Color(red: 0.208, green: 0.247, blue: 0.329))
+                        .fill(Color.customBlue)
                         .frame(height: 700)
                         
                     VStack(alignment: .leading, spacing: 30) {
@@ -37,32 +37,32 @@ struct VistaEmotionSingle: View {
                                 Button {
                                     itemSelecionado = 0
                                 } label: {
-                                    Text("Entenderla")
+                                    Text("Entiendela")
                                         .font(.headline)
                                         .foregroundColor(Color.white)
                                         .padding()
-                                        .background(Color(red: 0.21, green: 0.91, blue: 0.69))
+                                        .background(Color.customGreen)
                                         .cornerRadius(10)
 
                                 }
                                 Button {
                                     itemSelecionado = 1
                                 } label: {
-                                    Text("Vivirla")
+                                    Text("Vívela")
                                         .font(.headline)
                                         .foregroundColor(Color.white)
                                         .padding()
-                                        .background(Color(red: 0.21, green: 0.91, blue: 0.69))
+                                        .background(Color.customGreen)
                                         .cornerRadius(10)
                                 }
                                 Button {
                                     itemSelecionado = 2
                                 } label: {
-                                    Text("Gestionarla")
+                                    Text("Gestiónala")
                                         .font(.headline)
                                         .foregroundColor(Color.white)
                                         .padding()
-                                        .background(Color(red: 0.21, green: 0.91, blue: 0.69))
+                                        .background(Color.customGreen)
                                         .cornerRadius(10)
                                 }
                             }

@@ -55,7 +55,7 @@ struct VistaMedita: View {
             .tint(.black)
         }
         .padding()
-        .background(Color(red: 0.208, green: 0.247, blue: 0.329))
+        .background(Color.customBlue)
         .onAppear {
             print("URL música: \(urlMusica)")
             reproductor.setup(url: urlMusica)

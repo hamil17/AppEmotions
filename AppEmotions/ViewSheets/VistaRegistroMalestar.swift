@@ -85,7 +85,7 @@ struct VistaRegistroMalestar: View {
             
         }
         .padding()
-        .background(Color(red: 0.208, green: 0.247, blue: 0.329))
+        .background(Color.customBlue)
     }
 }
 

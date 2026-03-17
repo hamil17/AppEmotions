@@ -30,7 +30,7 @@ struct VistaMain: View {
                     VStack {
                         ZStack {
                             RoundedRectangle(cornerRadius: 5)
-                                .fill(Color(red: 0.208, green: 0.247, blue: 0.329))
+                                .fill(Color.customBlue)
                                 .padding()
                                 .frame(height: 90)
                             
@@ -51,7 +51,7 @@ struct VistaMain: View {
                                 } label: {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color(red: 0.208, green: 0.247, blue: 0.329))
+                                            .fill(Color.customBlue)
                                         VStack {
                                             Image("ico\(emocion.image)")
                                                 .frame(width: 100, height: 100)
@@ -84,13 +84,13 @@ struct VistaMain: View {
                             VistaDashboard()
                         } label : {
                             HStack {
-                                Text("Ver registros")
-                                Image(systemName: "pencil")
+                                Text("Dashboard")
+                                Image(systemName: "person.crop.circle")
                             }
 //                            Text("Ver registros", systemImage: "pencil")
                         }
                         Divider()
-                        Button ("Cerrar sesion", systemImage: "plus.square.on.square", role:.destructive) {
+                        Button ("Cerrar sesion", systemImage: "xmark.circle", role:.destructive) {
                             loginViewModel.logout()
                         }
                     } label: {
@@ -103,7 +103,7 @@ struct VistaMain: View {
 }
 
 #Preview {
-    var loginViewModel = LoginViewModel()
+    let loginViewModel = LoginViewModel()
     VistaMain(loginViewModel: loginViewModel)
         
 }

@@ -50,7 +50,7 @@ struct VistaAnaliza: View {
             
         }
         .padding()
-        .background(Color(red: 0.208, green: 0.247, blue: 0.329))
+        .background(Color.customBlue)
         .onAppear(){
             // Carga al entrar en la vista
             viewModel.cargarRespuesta(idEmocion: emocion.id ?? "No ID", bindingTexto: $respuestaEmocion)

@@ -11,16 +11,16 @@ struct SquareButton: View {
     
     let image: String
     let text: String
+    let color: Color
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(red: 0.235, green: 0.918, blue: 0.663))
+                .fill(color.gradient)
             VStack {
                 Image(image)
-                    .frame(width: 100, height: 100)
+//                    .frame(width: 100, height: 100)
                 Text(text)
-                    .font(.title2)
                     .foregroundStyle(.white)
                     .bold()
             }
@@ -31,5 +31,5 @@ struct SquareButton: View {
 }
 
 #Preview {
-    SquareButton(image: "icoArrow", text: "Entiendela")
+    SquareButton(image: "icoArrow", text: "Entiendela", color: Color.customBlue)
 }

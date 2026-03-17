@@ -23,7 +23,7 @@ struct EmocionGestionala: View {
                 mostrarModal = true
 //                tag = TagID(id: 1)
             } label: {
-                SquareButton(image: "icoSun", text: "Registro de malestar (Lowlights)")
+                SquareButton(image: "icoSun", text: "Registro de malestar (Lowlights)", color: Color.customGreen)
             }
         }
         .sheet(isPresented: $mostrarModal){
