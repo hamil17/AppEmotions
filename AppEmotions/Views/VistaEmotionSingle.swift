@@ -92,7 +92,7 @@ struct VistaEmotionSingle: View {
                 }
                 .background(.gray.opacity(0.5))
             
-    }
+        }
         .onAppear {
             dailyStats.markTask(uid: uid, task: .didExploreEmotion)
         }
