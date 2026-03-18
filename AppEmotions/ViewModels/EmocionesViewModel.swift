@@ -71,15 +71,13 @@ class EmocionesViewModel {
     func cargarRespuesta(uid: String, idEmocion: String, bindingTexto: Binding<String>) {
         respuestasRef(uid: uid)
             .whereField("idEmocion", isEqualTo: idEmocion)
-            .order(by: "fecha", descending: true)
-            .limit(to: 1)
             .getDocuments { snapshot, error in
                 if let error = error {
                     print("Error cargando respuesta: \(error)")
                     return
                 }
                 
-                guard let doc = snapshot?.documents.first,
+                guard let doc = snapshot?.documents.last,
                       let data = doc.data() as? [String: Any],
                       let textoGuardado = data["texto"] as? String else {
                     bindingTexto.wrappedValue = ""
