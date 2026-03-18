@@ -13,8 +13,9 @@ struct Respuesta: Identifiable, Codable {
     
     var texto: String
     var idEmocion: String
+    var fecha: Date
     
     enum CodingKeys: String, CodingKey {
-        case texto, idEmocion
+        case texto, idEmocion, fecha
     }
 }

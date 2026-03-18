@@ -9,8 +9,6 @@ import SwiftUI
 import Charts
 
 struct VistaDashboard: View {
-    @State private var mostrarModal = false
-
     let uid: String
     @State private var dailyStats = DailyStatsViewModel()
     
@@ -71,7 +69,7 @@ struct VistaDashboard: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 30)
                             .fill(Color.customGreen.gradient)
-                            .frame(height: 700)
+                            .frame(height: 200)
                         VStack(alignment: .leading){
                             let columnas = [
                                 GridItem(.flexible(), spacing: 20),
@@ -79,22 +77,16 @@ struct VistaDashboard: View {
                             ]
                             
                             LazyVGrid(columns: columnas, spacing: 10) {
-                                Button{
-                                    mostrarModal = true
-                    //                tag = TagID(id: 1)
+                                NavigationLink {
+                                    VistaRegistroEmociones(uid: uid)
                                 } label: {
                                     SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customBlue)
                                 }
-                                Button{
-                                    mostrarModal = true
-                    //                tag = TagID(id: 1)
+                                NavigationLink {
+                                    VistaListaRegistrosMalestar(uid: uid)
                                 } label: {
                                     SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customBlue)
                                 }
-                            }
-                            .sheet(isPresented: $mostrarModal){
-//                                VistaRegistroMalestar(emocion:emocion)
-                                Text("aqui la vista a mostrar")
                             }
                             Spacer()
                         }
@@ -103,7 +95,7 @@ struct VistaDashboard: View {
                 }
                 .padding(.top, 90)
                 .navigationTitle("Dashboard")
-        } // VStack principal
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.gray.opacity(0.5))
         .ignoresSafeArea()
@@ -112,8 +104,6 @@ struct VistaDashboard: View {
             dailyStats.listenToday(uid: uid)
             dailyStats.listenRecentAccess(uid: uid)
         }
-        
-            
     }
 }
 

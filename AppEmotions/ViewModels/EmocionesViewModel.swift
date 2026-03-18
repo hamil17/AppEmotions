@@ -21,6 +21,7 @@ class EmocionesViewModel {
     
     var emociones: [Emocion] = []
     var respuestas: [Respuesta] = []
+    var registros: [Registro] = []
     
     private var db = Firestore.firestore()
     
@@ -86,25 +87,43 @@ class EmocionesViewModel {
     }
     
     func anadirRespuesta(uid: String, texto: String, idEmocion: String) {
+        let docRef = respuestasRef(uid: uid)
         
-        // 1. Referencia al documento fijo para esa emoción
-        let docRef = respuestasRef(uid: uid).document(idEmocion)
+        let nuevaRespuesta = Respuesta(texto: texto, idEmocion: idEmocion, fecha: Date())
         
-        // 2. Datos a guardar (ejemplo sencillo)
-        let data: [String: Any] = [
-            "idEmocion": idEmocion,
-            "texto": texto,
-            "fecha": Timestamp(date: Date())
-        ]
-        
-        // 3. setData => crea si no existe, actualiza si existe
-        docRef.setData(data, merge: true) { error in
-            if let error = error {
-                print("Error al guardar respuesta: \(error)")
-            } else {
-                print("Respuesta guardada/actualizada correctamente")
-            }
+        do {
+            try docRef.addDocument(from: nuevaRespuesta)
+        } catch {
+            print("Error al guardar respuesta: \(error)")
         }
+    }
+    
+    func escucharRespuestas(uid: String) {
+        respuestasRef(uid: uid)
+            .order(by: "fecha", descending: true)
+            .addSnapshotListener { snapshot, error in
+                if let error = error {
+                    print("Error cargando respuestas: \(error)")
+                    return
+                }
+                self.respuestas = snapshot?.documents.compactMap { doc in
+                    try? doc.data(as: Respuesta.self)
+                } ?? []
+            }
+    }
+    
+    func escucharRegistros(uid: String) {
+        registrosRef(uid: uid)
+            .order(by: "fecha", descending: true)
+            .addSnapshotListener { snapshot, error in
+                if let error = error {
+                    print("Error cargando registros: \(error)")
+                    return
+                }
+                self.registros = snapshot?.documents.compactMap { doc in
+                    try? doc.data(as: Registro.self)
+                } ?? []
+            }
     }
     
     func anadirRegistro(uid: String, fecha: Date, situacion:String,pensamientos:String, emociones:String, conducta:String, nivelMalestar:Double, idEmocion:String){
