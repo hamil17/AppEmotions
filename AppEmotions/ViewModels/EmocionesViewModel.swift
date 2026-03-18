@@ -99,28 +99,30 @@ class EmocionesViewModel {
     }
     
     func escucharRespuestas(uid: String) {
+        respuestas.removeAll()
         respuestasRef(uid: uid)
             .order(by: "fecha", descending: true)
-            .addSnapshotListener { snapshot, error in
+            .addSnapshotListener { [weak self] snapshot, error in
                 if let error = error {
                     print("Error cargando respuestas: \(error)")
                     return
                 }
-                self.respuestas = snapshot?.documents.compactMap { doc in
+                self?.respuestas = snapshot?.documents.compactMap { doc in
                     try? doc.data(as: Respuesta.self)
                 } ?? []
             }
     }
     
     func escucharRegistros(uid: String) {
+        registros.removeAll()
         registrosRef(uid: uid)
             .order(by: "fecha", descending: true)
-            .addSnapshotListener { snapshot, error in
+            .addSnapshotListener { [weak self] snapshot, error in
                 if let error = error {
                     print("Error cargando registros: \(error)")
                     return
                 }
-                self.registros = snapshot?.documents.compactMap { doc in
+                self?.registros = snapshot?.documents.compactMap { doc in
                     try? doc.data(as: Registro.self)
                 } ?? []
             }
