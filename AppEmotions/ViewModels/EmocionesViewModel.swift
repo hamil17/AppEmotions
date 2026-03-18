@@ -69,23 +69,25 @@ class EmocionesViewModel {
     }
     
     func cargarRespuesta(uid: String, idEmocion: String, bindingTexto: Binding<String>) {
-        let docRef = respuestasRef(uid: uid).document(idEmocion)
-        
-        // Listener en tiempo real: carga inicial + cambios futuros
-        docRef.addSnapshotListener { snapshot, error in
-            if let error = error {
-                print("Error cargando respuesta: \(error)")
-                return
+        respuestasRef(uid: uid)
+            .whereField("idEmocion", isEqualTo: idEmocion)
+            .order(by: "fecha", descending: true)
+            .limit(to: 1)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error cargando respuesta: \(error)")
+                    return
+                }
+                
+                guard let doc = snapshot?.documents.first,
+                      let data = doc.data() as? [String: Any],
+                      let textoGuardado = data["texto"] as? String else {
+                    bindingTexto.wrappedValue = ""
+                    return
+                }
+                
+                bindingTexto.wrappedValue = textoGuardado
             }
-            
-            guard let data = snapshot?.data(),
-                  let textoGuardado = data["texto"] as? String else {
-                bindingTexto.wrappedValue = ""  // No existe, limpia
-                return
-            }
-            
-            bindingTexto.wrappedValue = textoGuardado  // Carga el texto
-        }
     }
     
     func anadirRespuesta(uid: String, texto: String, idEmocion: String) {

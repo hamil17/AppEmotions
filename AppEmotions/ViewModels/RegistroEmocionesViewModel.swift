@@ -37,6 +37,8 @@ class RegistroEmocionesViewModel {
         
         listener = respuestasRef(uid: uid)
             .order(by: "fecha", descending: true)
+            .whereField("idEmocion", isEqualTo: "")
+            .limit(to: 1)
             .addSnapshotListener { [weak self] snapshot, error in
                 if let error = error {
                     print("Error: \(error)")
@@ -46,5 +48,25 @@ class RegistroEmocionesViewModel {
                     try? doc.data(as: Respuesta.self)
                 } ?? []
             }
+    }
+    
+    func cargarRespuestaTexto(uid: String, idEmocion: String) async -> String? {
+        do {
+            let snapshot = try await respuestasRef(uid: uid)
+                .whereField("idEmocion", isEqualTo: idEmocion)
+                .order(by: "fecha", descending: true)
+                .limit(to: 1)
+                .getDocuments()
+            
+            guard let doc = snapshot.documents.first,
+                  let data = doc.data() as? [String: Any],
+                  let texto = data["texto"] as? String else {
+                return nil
+            }
+            return texto
+        } catch {
+            print("Error cargando respuesta: \(error)")
+            return nil
+        }
     }
 }
