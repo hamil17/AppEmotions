@@ -24,6 +24,8 @@ class EmocionesViewModel {
     var registros: [Registro] = []
     
     private var db = Firestore.firestore()
+    private var listenerRespuestas: ListenerRegistration?
+    private var listenerRegistros: ListenerRegistration?
     
     init(){
         escucharDatos()
@@ -99,8 +101,9 @@ class EmocionesViewModel {
     }
     
     func escucharRespuestas(uid: String) {
+        listenerRespuestas?.remove()
         respuestas.removeAll()
-        respuestasRef(uid: uid)
+        listenerRespuestas = respuestasRef(uid: uid)
             .order(by: "fecha", descending: true)
             .addSnapshotListener { [weak self] snapshot, error in
                 if let error = error {
@@ -114,8 +117,9 @@ class EmocionesViewModel {
     }
     
     func escucharRegistros(uid: String) {
+        listenerRegistros?.remove()
         registros.removeAll()
-        registrosRef(uid: uid)
+        listenerRegistros = registrosRef(uid: uid)
             .order(by: "fecha", descending: true)
             .addSnapshotListener { [weak self] snapshot, error in
                 if let error = error {
