@@ -9,7 +9,7 @@ import SwiftUI
 
 struct VistaRegistroEmociones: View {
     let uid: String
-    @State var viewModel = EmocionesViewModel()
+    @State var viewModel = RegistroEmocionesViewModel()
     
     var body: some View {
         List {
@@ -47,7 +47,7 @@ struct VistaRegistroEmociones: View {
         }
         .navigationTitle("Registro de Emociones")
         .onAppear {
-            viewModel.escucharRespuestas(uid: uid)
+            viewModel.escuchar(uid: uid)
         }
     }
 }

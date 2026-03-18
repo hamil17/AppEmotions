@@ -9,7 +9,7 @@ import SwiftUI
 
 struct VistaListaRegistrosMalestar: View {
     let uid: String
-    @State var viewModel = EmocionesViewModel()
+    @State var viewModel = RegistroMalestarViewModel()
     
     var body: some View {
         List {
@@ -57,7 +57,7 @@ struct VistaListaRegistrosMalestar: View {
         }
         .navigationTitle("Registros de Malestar")
         .onAppear {
-            viewModel.escucharRegistros(uid: uid)
+            viewModel.escuchar(uid: uid)
         }
     }
 }
