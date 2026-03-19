@@ -8,45 +8,90 @@
 import SwiftUI
 import Charts
 
+struct TaskCheckRow: View {
+    let title: String
+    let completed: Bool
+    
+    var body: some View {
+        HStack {
+            Image(systemName: completed ? "checkmark.circle.fill" : "circle")
+                .foregroundStyle(completed ? .green : .gray)
+            Text(title)
+                .foregroundStyle(completed ? .primary : .secondary)
+            Spacer()
+        }
+    }
+}
+
 struct VistaDashboard: View {
     let uid: String
     @State private var dailyStats = DailyStatsViewModel()
+    
+    private var motivationalMessage: String {
+        let completed = dailyStats.todayTasksCompleted
+        let total = DailyTaskId.allCases.count
+        
+        switch completed {
+        case 0:
+            return "¡Empieza tu día! 🌱"
+        case 1:
+            return "¡Buen inicio! Sigue así 🚀"
+        case 2:
+            return "¡Vas muy bien! 💪"
+        case 3:
+            return "¡Más de la mitad! 🎯"
+        case total - 1:
+            return "¡Casi lo tienes! 🔥"
+        case total:
+            return "¡Día completado! 🏆"
+        default:
+            return "¡Sigue adelante! ✨"
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
                 ScrollView{
                     VStack {
                         VStack(alignment: .leading){
-                            VStack {
-                                HStack {
-                                    Text(Date.now.formatted(date: .complete, time: .omitted))
-                                        .font(.headline)
-                                    Spacer()
-                                }
-                                Divider()
-                                    .padding(.top)
-                                    .padding(.bottom)
-                                HStack(alignment: .top){
-                                    Image("icoUserMale")
-                                    VStack{
-                                        Text("!Buen progreso!")
-                                            .font(.title)
-                                            .bold()
-                                        Text("Este progreso se mide según las emociones que has registrado hoy.")
-                                            .padding(.top, 1)
-                                        
-                                    }
-                                }
-                                Slider(
-                                    value: .constant(dailyStats.todayProgress),
-                                    in: 0...100,
-                                    step: 1
-                                )
-                                .tint(Color.customBlue)
-                                .disabled(true)
-                                Text("tu progreso hoy es del \(Int(dailyStats.todayProgress))% (\(dailyStats.todayTasksCompleted)/5 tareas)")
+                    VStack {
+                        HStack {
+                            Text(Date.now.formatted(date: .complete, time: .omitted))
+                                .font(.headline)
+                            Spacer()
+                        }
+                        Divider()
+                            .padding(.top)
+                            .padding(.bottom)
+                        HStack(alignment: .top){
+                            Image("icoUserMale")
+                            VStack(alignment: .leading){
+                                Text(motivationalMessage)
+                                    .font(.title2)
+                                    .bold()
                             }
-                            .padding()
+                        }
+                        .padding(.bottom)
+                        
+                        VStack(alignment: .leading, spacing: 12) {
+                            TaskCheckRow(title: "Explorar emociones", completed: dailyStats.taskExploreEmotionCompleted)
+                            TaskCheckRow(title: "Analizar una emoción", completed: dailyStats.taskAnalyzeCompleted)
+                            TaskCheckRow(title: "Meditar 30 segundos", completed: dailyStats.taskMeditateCompleted)
+                            TaskCheckRow(title: "Registrar malestar", completed: dailyStats.taskRegisterMalestarCompleted)
+                            TaskCheckRow(title: "Abrir Dashboard", completed: dailyStats.taskOpenDashboardCompleted)
+                        }
+                        .padding()
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(15)
+                        
+                        ProgressView(value: dailyStats.todayProgress, total: 100)
+                            .tint(Color.customBlue)
+                            .scaleEffect(x: 1, y: 2, anchor: .center)
+                        Text("\(Int(dailyStats.todayProgress))% completado (\(dailyStats.todayTasksCompleted)/\(DailyTaskId.allCases.count) objetivos)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding()
                             
                             VStack{
                                 VStack(alignment: .leading, spacing: 8) {

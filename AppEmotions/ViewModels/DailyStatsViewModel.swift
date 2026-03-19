@@ -26,6 +26,12 @@ final class DailyStatsViewModel {
     var todayProgress: Double = 0
     var todayTasksCompleted: Int = 0
     
+    var taskAnalyzeCompleted: Bool = false
+    var taskMeditateCompleted: Bool = false
+    var taskRegisterMalestarCompleted: Bool = false
+    var taskOpenDashboardCompleted: Bool = false
+    var taskExploreEmotionCompleted: Bool = false
+    
     deinit {
         recentListener?.remove()
         todayListener?.remove()
@@ -173,6 +179,7 @@ final class DailyStatsViewModel {
             guard let data = snapshot?.data() else {
                 self.todayProgress = 0
                 self.todayTasksCompleted = 0
+                self.resetTasks()
                 return
             }
             
@@ -188,9 +195,24 @@ final class DailyStatsViewModel {
                 ?? (tasksCompletedAny as? Int64).map(Int.init)
                 ?? 0
             
+            let tasks = data["tasks"] as? [String: Bool] ?? [:]
+            
             self.todayProgress = progress
             self.todayTasksCompleted = tasksCompleted
+            self.taskAnalyzeCompleted = tasks[DailyTaskId.didAnalyze.rawValue] ?? false
+            self.taskMeditateCompleted = tasks[DailyTaskId.didMeditate30s.rawValue] ?? false
+            self.taskRegisterMalestarCompleted = tasks[DailyTaskId.didRegisterMalestar.rawValue] ?? false
+            self.taskOpenDashboardCompleted = tasks[DailyTaskId.didOpenDashboard.rawValue] ?? false
+            self.taskExploreEmotionCompleted = tasks[DailyTaskId.didExploreEmotion.rawValue] ?? false
         }
+    }
+    
+    private func resetTasks() {
+        taskAnalyzeCompleted = false
+        taskMeditateCompleted = false
+        taskRegisterMalestarCompleted = false
+        taskOpenDashboardCompleted = false
+        taskExploreEmotionCompleted = false
     }
 }
 
