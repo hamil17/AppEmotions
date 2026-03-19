@@ -16,81 +16,89 @@ struct VistaDashboard: View {
         VStack(alignment: .leading) {
                 ScrollView{
                     VStack {
-                        HStack {
-                            Text(Date.now.formatted(date: .complete, time: .omitted))
-                                .font(.headline)
-                            Spacer()
-                        }
-                        Divider()
-                            .padding(.top)
-                            .padding(.bottom)
-                        HStack(alignment: .top){
-                            Image("icoUserMale")
-                            VStack{
-                                Text("!Buen progreso!")
-                                    .font(.title)
-                                    .bold()
-                                Text("Este progreso se mide según las emociones que has registrado hoy.")
-                                    .padding(.top, 1)
-                                
-                            }
-                        }
-                        Slider(
-                            value: .constant(dailyStats.todayProgress),
-                            in: 0...100,
-                            step: 1
-                        )
-                        .tint(Color.customBlue)
-                        .disabled(true)
-                        Text("tu progreso hoy es del \(Int(dailyStats.todayProgress))% (\(dailyStats.todayTasksCompleted)/5 tareas)")
-                    }
-                    .padding()
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Accesos por día")
-                            .font(.headline)
-                        
-                        if dailyStats.recentAccessStats.isEmpty {
-                            Text("Aún no hay datos.")
-                                .foregroundStyle(.secondary)
-                        } else {
-                            Chart(dailyStats.recentAccessStats) { item in
-                                BarMark(
-                                    x: .value("Día", item.date, unit: .day),
-                                    y: .value("Accesos", item.accessCount)
-                                )
-                                .foregroundStyle(Color.customBlue)
-                            }
-                            .frame(height: 160)
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 30)
-                            .fill(Color.customGreen.gradient)
-                            .frame(height: 200)
                         VStack(alignment: .leading){
-                            let columnas = [
-                                GridItem(.flexible(), spacing: 20),
-                                GridItem(.flexible(), spacing: 20)
-                            ]
-                            
-                            LazyVGrid(columns: columnas, spacing: 10) {
-                                NavigationLink {
-                                    VistaRegistroEmociones(uid: uid)
-                                } label: {
-                                    SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customBlue)
+                            VStack {
+                                HStack {
+                                    Text(Date.now.formatted(date: .complete, time: .omitted))
+                                        .font(.headline)
+                                    Spacer()
                                 }
-                                NavigationLink {
-                                    VistaListaRegistrosMalestar(uid: uid)
-                                } label: {
-                                    SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customBlue)
+                                Divider()
+                                    .padding(.top)
+                                    .padding(.bottom)
+                                HStack(alignment: .top){
+                                    Image("icoUserMale")
+                                    VStack{
+                                        Text("!Buen progreso!")
+                                            .font(.title)
+                                            .bold()
+                                        Text("Este progreso se mide según las emociones que has registrado hoy.")
+                                            .padding(.top, 1)
+                                        
+                                    }
+                                }
+                                Slider(
+                                    value: .constant(dailyStats.todayProgress),
+                                    in: 0...100,
+                                    step: 1
+                                )
+                                .tint(Color.customBlue)
+                                .disabled(true)
+                                Text("tu progreso hoy es del \(Int(dailyStats.todayProgress))% (\(dailyStats.todayTasksCompleted)/5 tareas)")
+                            }
+                            .padding()
+                            
+                            VStack{
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Accesos por día")
+                                        .font(.headline)
+                                    
+                                    if dailyStats.recentAccessStats.isEmpty {
+                                        Text("Aún no hay datos.")
+                                            .foregroundStyle(.secondary)
+                                    } else {
+                                        Chart(dailyStats.recentAccessStats) { item in
+                                            BarMark(
+                                                x: .value("Día", item.date, unit: .day),
+                                                y: .value("Accesos", item.accessCount)
+                                            )
+                                            .foregroundStyle(Color.customBlue)
+                                        }
+                                        .frame(height: 160)
+                                    }
+                                }
+                                .padding(.vertical, 30)
+                                
+                                let columnas = [
+                                    GridItem(.flexible(), spacing: 20),
+                                    GridItem(.flexible(), spacing: 20)
+                                ]
+                                
+                                LazyVGrid(columns: columnas, spacing: 10) {
+                                    NavigationLink {
+                                        VistaRegistroEmociones(uid: uid)
+                                    } label: {
+                                        SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customBlue)
+                                    }
+                                    NavigationLink {
+                                        VistaListaRegistrosMalestar(uid: uid)
+                                    } label: {
+                                        SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customBlue)
+                                    }
                                 }
                             }
-                            Spacer()
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .fill(Color.customGreen.gradient)
+                            )
+
+                            
+                            
+                            
+                            
                         }
-                        .padding(40)
                     }
                 }
                 .padding(.top, 90)
