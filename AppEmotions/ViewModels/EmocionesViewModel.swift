@@ -77,14 +77,13 @@ class EmocionesViewModel {
                     return
                 }
                 
-                guard let doc = snapshot?.documents.last,
-                      let data = doc.data() as [String: Any],
-                      let textoGuardado = data["texto"] as? String else {
+                guard let doc = snapshot?.documents.last else {
                     bindingTexto.wrappedValue = ""
                     return
                 }
-                
-                bindingTexto.wrappedValue = textoGuardado
+                let data = doc.data()
+                let textoGuardado = data["texto"] as? String
+                bindingTexto.wrappedValue = textoGuardado ?? ""
             }
     }
     
