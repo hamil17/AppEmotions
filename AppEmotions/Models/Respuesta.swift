@@ -18,9 +18,10 @@ struct Respuesta: Identifiable, Codable {
         case texto, idEmocion, fecha
     }
     
-    init(texto: String, idEmocion: String, fecha: Date) {
+    init(texto: String, idEmocion: String, fecha: Date, id: String = UUID().uuidString) {
         self.texto = texto
         self.idEmocion = idEmocion
         self.fecha = fecha
+        self.id = id
     }
 }
