@@ -87,9 +87,9 @@ struct VistaRegistroMalestar: View {
                             emociones: emociones,
                             conducta: conducta,
                             nivelMalestar: nivelMalestar,
-                            idEmocion: registro.idEmocion
+                            idEmocion: registro.idEmocion,
+                            id: registro.id
                         )
-                        registroActualizado.id = registro.id
                         RegistroMalestarViewModel().actualizarRegistro(uid: uid, registro: registroActualizado)
                     } else {
                         viewModel.anadirRegistro(

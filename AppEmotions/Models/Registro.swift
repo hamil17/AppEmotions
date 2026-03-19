@@ -22,4 +22,15 @@ struct Registro: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
         case fecha, situacion, pensamientos, emociones, conducta, nivelMalestar, idEmocion
     }
+    
+    init(fecha: Date, situacion: String, pensamientos: String, emociones: String, conducta: String, nivelMalestar: Double, idEmocion: String, id: String = UUID().uuidString) {
+        self.fecha = fecha
+        self.situacion = situacion
+        self.pensamientos = pensamientos
+        self.emociones = emociones
+        self.conducta = conducta
+        self.nivelMalestar = nivelMalestar
+        self.idEmocion = idEmocion
+        self.id = id
+    }
 }
