@@ -63,7 +63,11 @@ struct VistaDashboard: View {
                             .padding(.top)
                             .padding(.bottom)
                         HStack(alignment: .top){
-                            Image("icoUserMale")
+                            let nivel = min(dailyStats.todayTasksCompleted, 3)
+                            Image("avatar_\(nivel)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100, height: 100)
                             VStack(alignment: .leading){
                                 Text(motivationalMessage)
                                     .font(.title2)
@@ -160,10 +164,6 @@ struct VistaDashboard: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.gray.opacity(0.5))
         .ignoresSafeArea()
-        .overlay(alignment: .bottomTrailing) {
-            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
-                .padding()
-        }
         .onAppear {
             dailyStats.markTask(uid: uid, task: .didOpenDashboard)
             dailyStats.listenToday(uid: uid)
