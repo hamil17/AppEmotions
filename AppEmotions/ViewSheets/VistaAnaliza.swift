@@ -15,6 +15,9 @@ struct VistaAnaliza: View {
     
     let uid: String
     var emocion:Emocion
+    var respuestaExistente: Respuesta?
+    
+    private var esEdicion: Bool { respuestaExistente != nil }
     
     var body: some View {
         VStack{
@@ -22,7 +25,7 @@ struct VistaAnaliza: View {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color(red: 0.235, green: 0.918, blue: 0.663))
                     .frame(height: 100)
-                Text("¿Qué pensamientos tienes cuando viene o estás en esta emoción?")
+                Text(esEdicion ? "Editando análisis" : "¿Qué pensamientos tienes cuando viene o estás en esta emoción?")
                     .bold()
             }
             TextEditor(text: $respuestaEmocion)
@@ -35,18 +38,28 @@ struct VistaAnaliza: View {
             Spacer()
             
             HStack{
-                Button("Cerrar") {
+                Button("Cancelar") {
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
-                Button("Guardar"){
-                    viewModel.anadirRespuesta(
-                        uid: uid,
-                        texto: respuestaEmocion,
-                        idEmocion: emocion.id ?? "No ID = desde el canvas"
-                    )
-                    dailyStats.markTask(uid: uid, task: .didAnalyze)
+                Button(esEdicion ? "Guardar cambios" : "Guardar"){
+                    if esEdicion, let respuesta = respuestaExistente {
+                        let respuestaActualizada = Respuesta(
+                            texto: respuestaEmocion,
+                            idEmocion: respuesta.idEmocion,
+                            fecha: Date(),
+                            id: respuesta.id
+                        )
+                        RegistroEmocionesViewModel().actualizarRespuesta(uid: uid, respuesta: respuestaActualizada)
+                    } else {
+                        viewModel.anadirRespuesta(
+                            uid: uid,
+                            texto: respuestaEmocion,
+                            idEmocion: emocion.id ?? "No ID = desde el canvas"
+                        )
+                        dailyStats.markTask(uid: uid, task: .didAnalyze)
+                    }
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -59,12 +72,15 @@ struct VistaAnaliza: View {
         .padding()
         .background(Color.customBlue)
         .onAppear(){
-            // Carga al entrar en la vista
-            viewModel.cargarRespuesta(
-                uid: uid,
-                idEmocion: emocion.id ?? "No ID",
-                bindingTexto: $respuestaEmocion
-            )
+            if let respuesta = respuestaExistente {
+                respuestaEmocion = respuesta.texto
+            } else {
+                viewModel.cargarRespuesta(
+                    uid: uid,
+                    idEmocion: emocion.id ?? "No ID",
+                    bindingTexto: $respuestaEmocion
+                )
+            }
         }
     }
 }

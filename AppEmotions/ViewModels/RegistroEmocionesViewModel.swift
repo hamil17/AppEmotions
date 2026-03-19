@@ -61,4 +61,19 @@ class RegistroEmocionesViewModel {
             }
     }
     
+    func actualizarRespuesta(uid: String, respuesta: Respuesta) {
+        let docRef = respuestasRef(uid: uid).document(respuesta.id)
+        let data: [String: Any] = [
+            "texto": respuesta.texto,
+            "idEmocion": respuesta.idEmocion,
+            "fecha": Timestamp(date: respuesta.fecha)
+        ]
+        docRef.setData(data, merge: true) { error in
+            if let error = error {
+                print("Error actualizando respuesta: \(error)")
+            } else {
+                print("Respuesta actualizada correctamente")
+            }
+        }
+    }
 }

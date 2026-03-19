@@ -21,27 +21,31 @@ struct VistaRegistroEmociones: View {
                 )
             } else {
                 ForEach(viewModel.respuestas, id: \.id) { respuesta in
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            if let emocion = viewModel.emociones.first(where: { $0.id == respuesta.idEmocion }) {
-                                Text(emocion.nombre)
+                    NavigationLink {
+                        VistaAnaliza(uid: uid, emocion: Emocion(nombre: "", descripcion: "", color: "", image: "", sonido: ""), respuestaExistente: respuesta)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                if let emocion = viewModel.emociones.first(where: { $0.id == respuesta.idEmocion }) {
+                                    Text(emocion.nombre)
+                                        .font(.caption)
+                                        .fontWeight(.semibold)
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(Color.customBlue)
+                                        .foregroundStyle(.white)
+                                        .clipShape(Capsule())
+                                }
+                                Spacer()
+                                Text(respuesta.fecha.formatted(date: .abbreviated, time: .shortened))
                                     .font(.caption)
-                                    .fontWeight(.semibold)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(Color.customBlue)
-                                    .foregroundStyle(.white)
-                                    .clipShape(Capsule())
+                                    .foregroundStyle(.secondary)
                             }
-                            Spacer()
-                            Text(respuesta.fecha.formatted(date: .abbreviated, time: .shortened))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            Text(respuesta.texto)
+                                .lineLimit(3)
                         }
-                        Text(respuesta.texto)
-                            .lineLimit(3)
+                        .padding(.vertical, 4)
                     }
-                    .padding(.vertical, 4)
                 }
             }
         }
