@@ -102,7 +102,6 @@ struct VistaRegistroMalestar: View {
                             nivelMalestar: nivelMalestar,
                             idEmocion: emocion.id ?? "No ID = desde el canvas"
                         )
-                        dailyStats.markTask(uid: uid, task: .didRegisterMalestar)
                     }
                     dismiss()
                 }

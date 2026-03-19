@@ -11,7 +11,6 @@ struct DailyAccessStat: Identifiable {
 enum DailyTaskId: String, CaseIterable {
     case didAnalyze
     case didMeditate30s
-    case didRegisterMalestar
     case didOpenDashboard
     case didExploreEmotion
 }
@@ -28,7 +27,6 @@ final class DailyStatsViewModel {
     
     var taskAnalyzeCompleted: Bool = false
     var taskMeditateCompleted: Bool = false
-    var taskRegisterMalestarCompleted: Bool = false
     var taskOpenDashboardCompleted: Bool = false
     var taskExploreEmotionCompleted: Bool = false
     
@@ -201,7 +199,6 @@ final class DailyStatsViewModel {
             self.todayTasksCompleted = tasksCompleted
             self.taskAnalyzeCompleted = tasks[DailyTaskId.didAnalyze.rawValue] ?? false
             self.taskMeditateCompleted = tasks[DailyTaskId.didMeditate30s.rawValue] ?? false
-            self.taskRegisterMalestarCompleted = tasks[DailyTaskId.didRegisterMalestar.rawValue] ?? false
             self.taskOpenDashboardCompleted = tasks[DailyTaskId.didOpenDashboard.rawValue] ?? false
             self.taskExploreEmotionCompleted = tasks[DailyTaskId.didExploreEmotion.rawValue] ?? false
         }
@@ -210,7 +207,6 @@ final class DailyStatsViewModel {
     private func resetTasks() {
         taskAnalyzeCompleted = false
         taskMeditateCompleted = false
-        taskRegisterMalestarCompleted = false
         taskOpenDashboardCompleted = false
         taskExploreEmotionCompleted = false
     }
