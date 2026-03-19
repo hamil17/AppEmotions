@@ -157,6 +157,10 @@ struct VistaDashboard: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.gray.opacity(0.5))
         .ignoresSafeArea()
+        .overlay(alignment: .bottomTrailing) {
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+                .padding()
+        }
         .onAppear {
             dailyStats.markTask(uid: uid, task: .didOpenDashboard)
             dailyStats.listenToday(uid: uid)

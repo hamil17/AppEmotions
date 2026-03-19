@@ -75,9 +75,12 @@ struct VistaMain: View {
                     
                 }
             }
-            .frame(maxHeight: .infinity)
             .background(.gray.opacity(0.5))
             .ignoresSafeArea()
+            .overlay(alignment: .bottomTrailing) {
+                AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+                    .padding()
+            }
             .navigationTitle("EmotionsConnect")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -103,6 +106,7 @@ struct VistaMain: View {
         }
         .onAppear {
             dailyStats.trackMainAccess(uid: uid)
+            dailyStats.listenToday(uid: uid)
         }
     }
 }
