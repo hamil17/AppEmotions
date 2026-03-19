@@ -16,7 +16,7 @@ struct SquareButton: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(color.gradient)
+                .fill(color)
             VStack {
                 Image(image)
 //                    .frame(width: 100, height: 100)

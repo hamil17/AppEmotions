@@ -15,9 +15,10 @@ struct TaskCheckRow: View {
     var body: some View {
         HStack {
             Image(systemName: completed ? "checkmark.circle.fill" : "circle")
-                .foregroundStyle(completed ? .green : .gray)
+                .foregroundStyle(completed ? Color.customBlue : .gray)
             Text(title)
                 .foregroundStyle(completed ? .primary : .secondary)
+                .font(.caption)
             Spacer()
         }
     }
@@ -33,19 +34,19 @@ struct VistaDashboard: View {
         
         switch completed {
         case 0:
-            return "¡Empieza tu día! 🌱"
+            return "¡Empieza tu día!"
         case 1:
-            return "¡Buen inicio! Sigue así 🚀"
+            return "¡Buen inicio!"
         case 2:
-            return "¡Vas muy bien! 💪"
+            return "¡Vas muy bien!"
         case 3:
-            return "¡Más de la mitad! 🎯"
+            return "¡Vas por la mitad!"
         case total - 1:
-            return "¡Casi lo tienes! 🔥"
+            return "¡Casi lo tienes!"
         case total:
-            return "¡Día completado! 🏆"
+            return "¡Día completado!"
         default:
-            return "¡Sigue adelante! ✨"
+            return "¡Sigue adelante!"
         }
     }
     
@@ -69,27 +70,31 @@ struct VistaDashboard: View {
                                 Text(motivationalMessage)
                                     .font(.title2)
                                     .bold()
+                                VStack(alignment: .leading, spacing: 12) {
+                                    TaskCheckRow(title: "Explorar emociones", completed: dailyStats.taskExploreEmotionCompleted)
+                                    TaskCheckRow(title: "Analizar una emoción", completed: dailyStats.taskAnalyzeCompleted)
+                                    TaskCheckRow(title: "Meditar 30 segundos", completed: dailyStats.taskMeditateCompleted)
+                                    TaskCheckRow(title: "Registrar malestar", completed: dailyStats.taskRegisterMalestarCompleted)
+                                    TaskCheckRow(title: "Abrir Dashboard", completed: dailyStats.taskOpenDashboardCompleted)
+                                }
+                                .padding()
+                                .background(Color.white.opacity(0.9))
+                                .cornerRadius(15)
                             }
                         }
                         .padding(.bottom)
                         
-                        VStack(alignment: .leading, spacing: 12) {
-                            TaskCheckRow(title: "Explorar emociones", completed: dailyStats.taskExploreEmotionCompleted)
-                            TaskCheckRow(title: "Analizar una emoción", completed: dailyStats.taskAnalyzeCompleted)
-                            TaskCheckRow(title: "Meditar 30 segundos", completed: dailyStats.taskMeditateCompleted)
-                            TaskCheckRow(title: "Registrar malestar", completed: dailyStats.taskRegisterMalestarCompleted)
-                            TaskCheckRow(title: "Abrir Dashboard", completed: dailyStats.taskOpenDashboardCompleted)
-                        }
-                        .padding()
-                        .background(Color.white.opacity(0.9))
-                        .cornerRadius(15)
                         
-                        ProgressView(value: dailyStats.todayProgress, total: 100)
-                            .tint(Color.customBlue)
-                            .scaleEffect(x: 1, y: 2, anchor: .center)
-                        Text("\(Int(dailyStats.todayProgress))% completado (\(dailyStats.todayTasksCompleted)/\(DailyTaskId.allCases.count) objetivos)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        
+                        VStack(alignment: .leading) {
+                            ProgressView(value: dailyStats.todayProgress, total: 100)
+                                .tint(Color.customYellow)
+                                .scaleEffect(x: 1, y: 2, anchor: .center)
+                            Text("\(Int(dailyStats.todayProgress))% completado (\(dailyStats.todayTasksCompleted)/\(DailyTaskId.allCases.count) objetivos)")
+//                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.top, 5)
+                        }
                     }
                     .padding()
                             
@@ -107,12 +112,12 @@ struct VistaDashboard: View {
                                                 x: .value("Día", item.date, unit: .day),
                                                 y: .value("Accesos", item.accessCount)
                                             )
-                                            .foregroundStyle(Color.customBlue)
+                                            .foregroundStyle(Color.customYellow)
                                         }
                                         .frame(height: 160)
                                     }
                                 }
-                                .padding(.vertical, 30)
+                                .padding(.vertical, 20)
                                 
                                 let columnas = [
                                     GridItem(.flexible(), spacing: 20),
@@ -123,12 +128,12 @@ struct VistaDashboard: View {
                                     NavigationLink {
                                         VistaRegistroEmociones(uid: uid)
                                     } label: {
-                                        SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customBlue)
+                                        SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customYellow)
                                     }
                                     NavigationLink {
                                         VistaListaRegistrosMalestar(uid: uid)
                                     } label: {
-                                        SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customBlue)
+                                        SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customYellow)
                                     }
                                 }
                             }
@@ -146,7 +151,7 @@ struct VistaDashboard: View {
                         }
                     }
                 }
-                .padding(.top, 90)
+                .padding(.top, 100)
                 .navigationTitle("Dashboard")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
