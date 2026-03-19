@@ -93,8 +93,11 @@ class EmocionesViewModel {
         
         let nuevaRespuesta = Respuesta(texto: texto, idEmocion: idEmocion, fecha: Date())
         
+        print("Guardando respuesta para uid: \(uid), emocion: \(idEmocion)")
+        
         do {
             try docRef.addDocument(from: nuevaRespuesta)
+            print("Respuesta guardada exitosamente")
         } catch {
             print("Error al guardar respuesta: \(error)")
         }
