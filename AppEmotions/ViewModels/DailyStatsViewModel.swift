@@ -13,6 +13,8 @@ enum DailyTaskId: String, CaseIterable {
     case didMeditate30s
     case didOpenDashboard
     case didExploreEmotion
+    
+    static var totalCount: Int { allCases.count }
 }
 
 @Observable
@@ -24,6 +26,7 @@ final class DailyStatsViewModel {
     var recentAccessStats: [DailyAccessStat] = []
     var todayProgress: Double = 0
     var todayTasksCompleted: Int = 0
+    var totalTasks: Int { DailyTaskId.totalCount }
     
     var taskAnalyzeCompleted: Bool = false
     var taskMeditateCompleted: Bool = false
@@ -93,7 +96,7 @@ final class DailyStatsViewModel {
             tasks[task.rawValue] = true
             
             let completed = tasks.values.filter { $0 }.count
-            let progress = min(100.0, (Double(completed) / Double(DailyTaskId.allCases.count)) * 100.0)
+            let progress = min(100.0, (Double(completed) / Double(DailyTaskId.totalCount)) * 100.0)
             
             transaction.setData([
                 "dayKey": key,

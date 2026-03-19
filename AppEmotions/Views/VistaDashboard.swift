@@ -30,7 +30,7 @@ struct VistaDashboard: View {
     
     private var motivationalMessage: String {
         let completed = dailyStats.todayTasksCompleted
-        let total = DailyTaskId.allCases.count
+        let total = dailyStats.totalTasks
         
         switch completed {
         case 0:
@@ -40,8 +40,6 @@ struct VistaDashboard: View {
         case 2:
             return "¡Vas muy bien!"
         case 3:
-            return "¡Vas por la mitad!"
-        case total - 1:
             return "¡Casi lo tienes!"
         case total:
             return "¡Día completado!"
@@ -89,7 +87,7 @@ struct VistaDashboard: View {
                             ProgressView(value: dailyStats.todayProgress, total: 100)
                                 .tint(Color.customYellow)
                                 .scaleEffect(x: 1, y: 2, anchor: .center)
-                            Text("\(Int(dailyStats.todayProgress))% completado (\(dailyStats.todayTasksCompleted)/\(DailyTaskId.allCases.count) objetivos)")
+                            Text("\(Int(dailyStats.todayProgress))% completado (\(dailyStats.todayTasksCompleted)/\(dailyStats.totalTasks) objetivos)")
 //                                .font(.caption)
                                 .foregroundStyle(.secondary)
                                 .padding(.top, 5)
@@ -118,6 +116,10 @@ struct VistaDashboard: View {
                                 }
                                 .padding(.vertical, 20)
                                 
+                                Divider()
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 30)
+                                
                                 let columnas = [
                                     GridItem(.flexible(), spacing: 20),
                                     GridItem(.flexible(), spacing: 20)
@@ -142,6 +144,8 @@ struct VistaDashboard: View {
                                 RoundedRectangle(cornerRadius: 30)
                                     .fill(Color.customGreen.gradient)
                             )
+                            
+                        
 
                             
                             

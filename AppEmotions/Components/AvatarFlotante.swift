@@ -15,12 +15,14 @@ struct AvatarFlotante: View {
     @State private var scale: CGFloat = 1.0
     @State private var showParticles: Bool = false
     
+    private let totalTareas = 4
+    
     private var nivelAvatar: Int {
         switch tareasCompletadas {
         case 0: return 0
-        case 1...2: return 1
-        case 3: return 2
-        case 4: return 3
+        case 1: return 1
+        case 2: return 2
+        case 3: return 3
         default: return 4
         }
     }
@@ -44,8 +46,7 @@ struct AvatarFlotante: View {
         case 0: return "¡Empieza tu día!"
         case 1: return "¡Buen inicio!"
         case 2: return "¡Sigue así!"
-        case 3: return "¡Más de la mitad!"
-        case 4: return "¡Casi lo tienes!"
+        case 3: return "¡Casi lo tienes!"
         default: return "¡Día perfecto!"
         }
     }
