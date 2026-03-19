@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 struct Registro: Identifiable, Codable {
-    @DocumentID var id: String?
+    var id: String = UUID().uuidString
     
     var fecha: Date
     var situacion: String

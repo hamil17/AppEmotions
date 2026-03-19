@@ -113,9 +113,11 @@ class EmocionesViewModel {
                     print("Error cargando respuestas: \(error)")
                     return
                 }
-                self?.respuestas = snapshot?.documents.compactMap { doc in
-                    try? doc.data(as: Respuesta.self)
-                } ?? []
+                self?.respuestas = snapshot?.documents.compactMap { doc -> Respuesta? in
+                    guard var respuesta = try? doc.data(as: Respuesta.self) else { return nil }
+                    respuesta.id = doc.documentID
+                    return respuesta
+                }
             }
     }
     
@@ -129,9 +131,11 @@ class EmocionesViewModel {
                     print("Error cargando registros: \(error)")
                     return
                 }
-                self?.registros = snapshot?.documents.compactMap { doc in
-                    try? doc.data(as: Registro.self)
-                } ?? []
+                self?.registros = snapshot?.documents.compactMap { doc -> Registro? in
+                    guard var registro = try? doc.data(as: Registro.self) else { return nil }
+                    registro.id = doc.documentID
+                    return registro
+                }
             }
     }
     
