@@ -46,10 +46,21 @@ struct VistaListaRegistrosMalestar: View {
                                 .font(.subheadline)
                         }
                         
-                        Text(registro.situacion)
-                            .lineLimit(2)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Label(registro.situacion, systemImage: "location")
+                                .lineLimit(2)
+                                .font(.caption)
+                            Label(registro.pensamientos, systemImage: "brain.head.profile")
+                                .lineLimit(2)
+                                .font(.caption)
+                            Label(registro.emociones, systemImage: "heart")
+                                .lineLimit(2)
+                                .font(.caption)
+                            Label(registro.conducta, systemImage: "figure.walk")
+                                .lineLimit(2)
+                                .font(.caption)
+                        }
+                        .foregroundStyle(.secondary)
                     }
                     .padding(.vertical, 4)
                 }
