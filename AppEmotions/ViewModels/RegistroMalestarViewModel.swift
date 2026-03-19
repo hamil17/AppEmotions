@@ -60,4 +60,24 @@ class RegistroMalestarViewModel {
                 }
             }
     }
+    
+    func actualizarRegistro(uid: String, registro: Registro) {
+        let docRef = registrosRef(uid: uid).document(registro.id)
+        let data: [String: Any] = [
+            "fecha": Timestamp(date: registro.fecha),
+            "situacion": registro.situacion,
+            "pensamientos": registro.pensamientos,
+            "emociones": registro.emociones,
+            "conducta": registro.conducta,
+            "nivelMalestar": registro.nivelMalestar,
+            "idEmocion": registro.idEmocion
+        ]
+        docRef.setData(data, merge: true) { error in
+            if let error = error {
+                print("Error actualizando registro: \(error)")
+            } else {
+                print("Registro actualizado correctamente")
+            }
+        }
+    }
 }

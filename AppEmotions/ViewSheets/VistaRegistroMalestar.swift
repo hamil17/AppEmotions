@@ -22,6 +22,9 @@ struct VistaRegistroMalestar: View {
     
     let uid: String
     var emocion:Emocion
+    var registroExistente: Registro?
+    
+    private var esEdicion: Bool { registroExistente != nil }
     
     var body: some View {
         VStack{
@@ -29,7 +32,7 @@ struct VistaRegistroMalestar: View {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color(red: 0.235, green: 0.918, blue: 0.663).gradient)
                     .frame(height: 100)
-                Text("Este registro se usa para que puedas reflexionar sobre tus emociones y cómo te sientes en diferentes situaciones.")
+                Text(esEdicion ? "Editando registro de malestar" : "Este registro se usa para que puedas reflexionar sobre tus emociones y cómo te sientes en diferentes situaciones.")
                     .bold()
                     .padding()
             }
@@ -70,23 +73,37 @@ struct VistaRegistroMalestar: View {
             }
             .cornerRadius(40)
             HStack{
-                Button("Cerrar") {
+                Button("Cancelar") {
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
-                Button("Guardar") {
-                    viewModel.anadirRegistro(
-                        uid: uid,
-                        fecha: fecha,
-                        situacion: situacion,
-                        pensamientos: pensamientos,
-                        emociones: emociones,
-                        conducta: conducta,
-                        nivelMalestar: nivelMalestar,
-                        idEmocion: emocion.id ?? "No ID = desde el canvas"
-                    )
-                    dailyStats.markTask(uid: uid, task: .didRegisterMalestar)
+                Button(esEdicion ? "Guardar cambios" : "Guardar") {
+                    if esEdicion, let registro = registroExistente {
+                        let registroActualizado = Registro(
+                            fecha: fecha,
+                            situacion: situacion,
+                            pensamientos: pensamientos,
+                            emociones: emociones,
+                            conducta: conducta,
+                            nivelMalestar: nivelMalestar,
+                            idEmocion: registro.idEmocion
+                        )
+                        registroActualizado.id = registro.id
+                        RegistroMalestarViewModel().actualizarRegistro(uid: uid, registro: registroActualizado)
+                    } else {
+                        viewModel.anadirRegistro(
+                            uid: uid,
+                            fecha: fecha,
+                            situacion: situacion,
+                            pensamientos: pensamientos,
+                            emociones: emociones,
+                            conducta: conducta,
+                            nivelMalestar: nivelMalestar,
+                            idEmocion: emocion.id ?? "No ID = desde el canvas"
+                        )
+                        dailyStats.markTask(uid: uid, task: .didRegisterMalestar)
+                    }
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -98,6 +115,16 @@ struct VistaRegistroMalestar: View {
         }
         .padding()
         .background(Color.customBlue)
+        .onAppear {
+            if let registro = registroExistente {
+                fecha = registro.fecha
+                situacion = registro.situacion
+                pensamientos = registro.pensamientos
+                emociones = registro.emociones
+                conducta = registro.conducta
+                nivelMalestar = registro.nivelMalestar
+            }
+        }
     }
 }
 

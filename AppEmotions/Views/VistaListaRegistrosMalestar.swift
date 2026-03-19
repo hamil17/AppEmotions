@@ -21,48 +21,52 @@ struct VistaListaRegistrosMalestar: View {
                 )
             } else {
                 ForEach(viewModel.registros, id: \.id) { registro in
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            if let emocion = viewModel.emociones.first(where: { $0.id == registro.idEmocion }) {
-                                Text(emocion.nombre)
+                    NavigationLink {
+                        VistaRegistroMalestar(uid: uid, emocion: Emocion(nombre: "", descripcion: "", color: "", image: "", sonido: ""), registroExistente: registro)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                if let emocion = viewModel.emociones.first(where: { $0.id == registro.idEmocion }) {
+                                    Text(emocion.nombre)
+                                        .font(.caption)
+                                        .fontWeight(.semibold)
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(Color.customBlue)
+                                        .foregroundStyle(.white)
+                                        .clipShape(Capsule())
+                                }
+                                Spacer()
+                                Text(registro.fecha.formatted(date: .abbreviated, time: .shortened))
                                     .font(.caption)
-                                    .fontWeight(.semibold)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    .background(Color.customBlue)
-                                    .foregroundStyle(.white)
-                                    .clipShape(Capsule())
+                                    .foregroundStyle(.secondary)
                             }
-                            Spacer()
-                            Text(registro.fecha.formatted(date: .abbreviated, time: .shortened))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            
+                            HStack {
+                                Image(systemName: "bolt.fill")
+                                    .foregroundStyle(.orange)
+                                Text("Malestar: \(Int(registro.nivelMalestar))/10")
+                                    .font(.subheadline)
+                            }
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Label(registro.situacion, systemImage: "location")
+                                    .lineLimit(2)
+                                    .font(.caption)
+                                Label(registro.pensamientos, systemImage: "brain.head.profile")
+                                    .lineLimit(2)
+                                    .font(.caption)
+                                Label(registro.emociones, systemImage: "heart")
+                                    .lineLimit(2)
+                                    .font(.caption)
+                                Label(registro.conducta, systemImage: "figure.walk")
+                                    .lineLimit(2)
+                                    .font(.caption)
+                            }
+                            .foregroundStyle(.secondary)
                         }
-                        
-                        HStack {
-                            Image(systemName: "bolt.fill")
-                                .foregroundStyle(.orange)
-                            Text("Malestar: \(Int(registro.nivelMalestar))/10")
-                                .font(.subheadline)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Label(registro.situacion, systemImage: "location")
-                                .lineLimit(2)
-                                .font(.caption)
-                            Label(registro.pensamientos, systemImage: "brain.head.profile")
-                                .lineLimit(2)
-                                .font(.caption)
-                            Label(registro.emociones, systemImage: "heart")
-                                .lineLimit(2)
-                                .font(.caption)
-                            Label(registro.conducta, systemImage: "figure.walk")
-                                .lineLimit(2)
-                                .font(.caption)
-                        }
-                        .foregroundStyle(.secondary)
+                        .padding(.vertical, 4)
                     }
-                    .padding(.vertical, 4)
                 }
             }
         }
