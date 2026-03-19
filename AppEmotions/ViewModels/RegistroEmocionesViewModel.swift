@@ -13,9 +13,11 @@ import FirebaseFirestore
 class RegistroEmocionesViewModel {
     var respuestas: [Respuesta] = []
     var emociones: [Emocion] = []
+    var isLoading = true
     
     private var db = Firestore.firestore()
-    private var listener: ListenerRegistration?
+    private var listenerRespuestas: ListenerRegistration?
+    private var listenerEmociones: ListenerRegistration?
     
     private func userRef(uid: String) -> DocumentReference {
         db.collection("users").document(uid)
@@ -26,16 +28,23 @@ class RegistroEmocionesViewModel {
     }
     
     func escuchar(uid: String) {
-        listener?.remove()
+        listenerRespuestas?.remove()
         respuestas.removeAll()
         
-        db.collection("Emociones").getDocuments { [weak self] snapshot, error in
-            self?.emociones = snapshot?.documents.compactMap { doc in
-                try? doc.data(as: Emocion.self)
-            } ?? []
-        }
-        
-        listener = respuestasRef(uid: uid)
+        listenerEmociones = db.collection("Emociones")
+            .addSnapshotListener { [weak self] snapshot, error in
+                self?.emociones = snapshot?.documents.compactMap { doc in
+                    try? doc.data(as: Emocion.self)
+                } ?? []
+                self?.isLoading = false
+                
+                self?.cargarRespuestas(uid: uid)
+            }
+    }
+    
+    private func cargarRespuestas(uid: String) {
+        listenerRespuestas?.remove()
+        listenerRespuestas = respuestasRef(uid: uid)
             .order(by: "fecha", descending: true)
             .addSnapshotListener { [weak self] snapshot, error in
                 if let error = error {
