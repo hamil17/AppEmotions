@@ -29,6 +29,16 @@ struct AvatarFlotante: View {
         "avatar_\(nivelAvatar)"
     }
     
+    private var emojiAvatar: String {
+        switch nivelAvatar {
+        case 0: return "😔"
+        case 1: return "😐"
+        case 2: return "🙂"
+        case 3: return "😊"
+        default: return "🥳"
+        }
+    }
+    
     private var mensajeMotivacional: String {
         switch tareasCompletadas {
         case 0: return "¡Empieza tu día!"
@@ -49,10 +59,8 @@ struct AvatarFlotante: View {
                     }
                 }
                 
-                Image(nombreImagen)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 80, height: 80)
+                Text(emojiAvatar)
+                    .font(.system(size: 60))
                     .scaleEffect(scale)
                     .shadow(color: .black.opacity(0.3), radius: 5, x: 2, y: 2)
             }
