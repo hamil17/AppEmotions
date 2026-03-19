@@ -85,7 +85,14 @@ struct VistaEmotionSingle: View {
             .frame(maxWidth: .infinity)
         }
         .background(.gray.opacity(0.5))
-        .onAppear { dailyStats.markTask(uid: uid, task: .didExploreEmotion) }
+        .overlay(alignment: .bottomTrailing) {
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+                .padding()
+        }
+        .onAppear { 
+            dailyStats.markTask(uid: uid, task: .didExploreEmotion)
+            dailyStats.listenToday(uid: uid)
+        }
     }
 }
 

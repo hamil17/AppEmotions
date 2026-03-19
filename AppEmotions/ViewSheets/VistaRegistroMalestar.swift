@@ -115,7 +115,12 @@ struct VistaRegistroMalestar: View {
         }
         .padding()
         .background(Color.customBlue)
+        .overlay(alignment: .bottomTrailing) {
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+                .padding()
+        }
         .onAppear {
+            dailyStats.listenToday(uid: uid)
             if let registro = registroExistente {
                 fecha = registro.fecha
                 situacion = registro.situacion

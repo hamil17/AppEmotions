@@ -71,7 +71,12 @@ struct VistaAnaliza: View {
         }
         .padding()
         .background(Color.customBlue)
+        .overlay(alignment: .bottomTrailing) {
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+                .padding()
+        }
         .onAppear(){
+            dailyStats.listenToday(uid: uid)
             if let respuesta = respuestaExistente {
                 respuestaEmocion = respuesta.texto
             } else {

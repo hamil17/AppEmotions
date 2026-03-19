@@ -64,7 +64,12 @@ struct VistaMedita: View {
         }
         .padding()
         .background(Color.customBlue)
+        .overlay(alignment: .bottomTrailing) {
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+                .padding()
+        }
         .onAppear {
+            dailyStats.listenToday(uid: uid)
             print("URL música: \(urlMusica)")
             reproductor.setup(url: urlMusica)
         }
