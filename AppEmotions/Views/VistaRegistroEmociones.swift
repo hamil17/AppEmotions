@@ -20,7 +20,7 @@ struct VistaRegistroEmociones: View {
                     description: Text("Aún no has realizado ningún análisis de emociones.")
                 )
             } else {
-                ForEach(viewModel.respuestas) { respuesta in
+                ForEach(viewModel.respuestas, id: \.id) { respuesta in
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             if let emocion = viewModel.emociones.first(where: { $0.id == respuesta.idEmocion }) {
