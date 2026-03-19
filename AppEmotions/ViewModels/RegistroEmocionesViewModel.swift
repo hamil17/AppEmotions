@@ -51,10 +51,12 @@ class RegistroEmocionesViewModel {
                     print("Error: \(error)")
                     return
                 }
-                self?.respuestas = snapshot?.documents.compactMap { doc -> Respuesta? in
+                if let results = snapshot?.documents.compactMap({ doc -> Respuesta? in
                     guard var respuesta = try? doc.data(as: Respuesta.self) else { return nil }
                     respuesta.id = doc.documentID
                     return respuesta
+                }) {
+                    self?.respuestas = results
                 }
             }
     }

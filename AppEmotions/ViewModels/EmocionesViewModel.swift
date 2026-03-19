@@ -78,7 +78,7 @@ class EmocionesViewModel {
                 }
                 
                 guard let doc = snapshot?.documents.last,
-                      let data = doc.data() as? [String: Any],
+                      let data = doc.data() as [String: Any],
                       let textoGuardado = data["texto"] as? String else {
                     bindingTexto.wrappedValue = ""
                     return
@@ -113,10 +113,12 @@ class EmocionesViewModel {
                     print("Error cargando respuestas: \(error)")
                     return
                 }
-                self?.respuestas = snapshot?.documents.compactMap { doc -> Respuesta? in
+                if let results = snapshot?.documents.compactMap({ doc -> Respuesta? in
                     guard var respuesta = try? doc.data(as: Respuesta.self) else { return nil }
                     respuesta.id = doc.documentID
                     return respuesta
+                }) {
+                    self?.respuestas = results
                 }
             }
     }
@@ -131,10 +133,12 @@ class EmocionesViewModel {
                     print("Error cargando registros: \(error)")
                     return
                 }
-                self?.registros = snapshot?.documents.compactMap { doc -> Registro? in
+                if let results = snapshot?.documents.compactMap({ doc -> Registro? in
                     guard var registro = try? doc.data(as: Registro.self) else { return nil }
                     registro.id = doc.documentID
                     return registro
+                }) {
+                    self?.registros = results
                 }
             }
     }

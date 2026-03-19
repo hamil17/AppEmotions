@@ -51,10 +51,12 @@ class RegistroMalestarViewModel {
                     print("Error: \(error)")
                     return
                 }
-                self?.registros = snapshot?.documents.compactMap { doc -> Registro? in
+                if let results = snapshot?.documents.compactMap({ doc -> Registro? in
                     guard var registro = try? doc.data(as: Registro.self) else { return nil }
                     registro.id = doc.documentID
                     return registro
+                }) {
+                    self?.registros = results
                 }
             }
     }
