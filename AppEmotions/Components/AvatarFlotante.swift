@@ -32,7 +32,15 @@ struct AvatarFlotante: View {
     }
     
     private var mensajeMotivacional: String {
-        "\(tareasCompletadas)/\(totalTareas)"
+        let frase: String
+        switch tareasCompletadas {
+        case 0: frase = "¡Empieza tu día!"
+        case 1: frase = "¡Buen inicio!"
+        case 2: frase = "¡Sigue así!"
+        case 3: frase = "¡Casi lo tienes!"
+        default: frase = "¡Día perfecto!"
+        }
+        return "\(tareasCompletadas)/\(totalTareas) - \(frase)"
     }
     
     var body: some View {
