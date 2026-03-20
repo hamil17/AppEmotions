@@ -76,4 +76,14 @@ class RegistroEmocionesViewModel {
             }
         }
     }
+    
+    func eliminarRespuesta(uid: String, respuesta: Respuesta) {
+        respuestasRef(uid: uid).document(respuesta.id).delete { error in
+            if let error = error {
+                print("Error eliminando respuesta: \(error)")
+            } else {
+                print("Respuesta eliminada correctamente")
+            }
+        }
+    }
 }

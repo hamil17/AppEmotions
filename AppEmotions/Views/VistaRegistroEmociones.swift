@@ -46,6 +46,13 @@ struct VistaRegistroEmociones: View {
                         }
                         .padding(.vertical, 4)
                     }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            viewModel.eliminarRespuesta(uid: uid, respuesta: respuesta)
+                        } label: {
+                            Label("Eliminar", systemImage: "trash")
+                        }
+                    }
                 }
             }
         }

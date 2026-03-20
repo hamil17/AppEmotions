@@ -67,6 +67,13 @@ struct VistaListaRegistrosMalestar: View {
                         }
                         .padding(.vertical, 4)
                     }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            viewModel.eliminarRegistro(uid: uid, registro: registro)
+                        } label: {
+                            Label("Eliminar", systemImage: "trash")
+                        }
+                    }
                 }
             }
         }

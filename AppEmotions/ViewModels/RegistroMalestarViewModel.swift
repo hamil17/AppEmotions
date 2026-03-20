@@ -80,4 +80,14 @@ class RegistroMalestarViewModel {
             }
         }
     }
+    
+    func eliminarRegistro(uid: String, registro: Registro) {
+        registrosRef(uid: uid).document(registro.id).delete { error in
+            if let error = error {
+                print("Error eliminando registro: \(error)")
+            } else {
+                print("Registro eliminado correctamente")
+            }
+        }
+    }
 }
