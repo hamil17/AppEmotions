@@ -67,7 +67,7 @@ struct VistaDashboard: View {
                             Image("avatar_\(nivel)")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
+                                .frame(width: 150, height: 120)
                             VStack(alignment: .leading){
                                 Text(motivationalMessage)
                                     .font(.title2)

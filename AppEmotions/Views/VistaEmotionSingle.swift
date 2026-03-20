@@ -25,10 +25,10 @@ struct VistaEmotionSingle: View {
                 Image("ico\(emocion.image)")
                     .padding(.bottom, 20)
                 
-                ZStack {
-                    RoundedRectangle(cornerRadius: 30)
-                        .fill(Color.customBlue)
-                        .frame(height: 700)
+//                VStack {
+//                    RoundedRectangle(cornerRadius: 30)
+//                        .fill(Color.customBlue)
+//                        .frame(height: 700)
                     
                     VStack(alignment: .leading, spacing: 30) {
                         ScrollView(.horizontal) {
@@ -76,13 +76,17 @@ struct VistaEmotionSingle: View {
                             EmocionGestionala(uid: uid, emocion: emocion)
                         }
                     }
-                    .padding(.vertical, 40)
+                    .padding(.vertical, 20)
                     .padding(30)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .ignoresSafeArea()
+                    .background(Color.customBlue)
+                    .cornerRadius(40)
+//                }
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .ignoresSafeArea()
             }
             .frame(maxWidth: .infinity)
+            .frame(height: 850)
+            
         }
         .background(.gray.opacity(0.5))
         .overlay(alignment: .bottomTrailing) {

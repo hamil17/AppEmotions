@@ -30,22 +30,17 @@ struct VistaMain: View {
                     
                     // Texto
                     VStack {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.customBlue)
-                                .padding()
-                                .frame(height: 90)
-                            
                             Text(
-                                "Elige una emoción y aprenderás lo que es,  como vivirla y como se puede gestionar"
+                                "Elige una emoción y descubre cómo funciona en tu cuerpo y mente, convirtiéndola en aliada de tu proceso personal o terapéutico."
                             )
                             .foregroundStyle(Color.white)
-                            .padding()
-                            
-                        }
                     }
+                    .padding()
+                    .background(Color.customBlue)
+                    .cornerRadius(10)
+                    .padding(10)
                     // Listado de emociones
-                    ScrollView{
+                    
                         LazyVGrid(columns: columnas) {
                             ForEach(viewModel.emociones) { emocion in
                                 NavigationLink {
@@ -69,7 +64,7 @@ struct VistaMain: View {
                                 }
                             }
                         }
-                    }
+                    
 //                    EmotionsList()
                     .padding()
                     

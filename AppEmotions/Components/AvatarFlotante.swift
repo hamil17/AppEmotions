@@ -56,6 +56,7 @@ struct AvatarFlotante: View {
                     .frame(width: 80, height: 80)
                     .scaleEffect(scale)
                     .shadow(color: .black.opacity(0.3), radius: 5, x: 2, y: 2)
+//                    .shadow(color: .white, radius: 10, x: 0, y: 0)
             }
             
             Text(mensajeMotivacional)

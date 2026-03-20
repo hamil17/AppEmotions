@@ -12,13 +12,16 @@ struct EmocionEntiendela: View {
     var emocion:Emocion
     
     var body: some View {
-        Text("Como se siente esta emoción:")
-            .foregroundStyle(Color.white)
-            .bold()
-            .multilineTextAlignment(.leading)
-        Text(emocion.descripcion)
-            .foregroundStyle(Color.white)
-        Spacer()
+        VStack (alignment: .leading, spacing: 20){
+            Text("Como se siente \(emocion.nombre):")
+                .foregroundStyle(Color.white)
+                .bold()
+                .font(.title2)
+            Text(emocion.descripcion)
+                .foregroundStyle(Color.white)
+            Spacer()
+        }
+        .background(Color.customBlue)
     }
 }
 
