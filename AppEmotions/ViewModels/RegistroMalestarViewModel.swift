@@ -19,6 +19,8 @@ class RegistroMalestarViewModel {
     private var listenerRegistros: ListenerRegistration?
     private var listenerEmociones: ListenerRegistration?
     
+    private static let ordenEmociones = ["Alegría", "Tristeza", "Miedo", "Ira", "Asco"]
+    
     private func userRef(uid: String) -> DocumentReference {
         db.collection("users").document(uid)
     }
@@ -33,12 +35,18 @@ class RegistroMalestarViewModel {
         
         listenerEmociones = db.collection("Emociones")
             .addSnapshotListener { [weak self] snapshot, error in
-                self?.emociones = snapshot?.documents.compactMap { doc in
+                guard let self else { return }
+                let mapped = snapshot?.documents.compactMap { doc -> Emocion? in
                     try? doc.data(as: Emocion.self)
                 } ?? []
-                self?.isLoading = false
+                self.emociones = mapped.sorted { e1, e2 in
+                    let i1 = Self.ordenEmociones.firstIndex(of: e1.nombre) ?? Int.max
+                    let i2 = Self.ordenEmociones.firstIndex(of: e2.nombre) ?? Int.max
+                    return i1 < i2
+                }
+                self.isLoading = false
                 
-                self?.cargarRegistros(uid: uid)
+                self.cargarRegistros(uid: uid)
             }
     }
     

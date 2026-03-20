@@ -43,8 +43,9 @@ class EmocionesViewModel {
         userRef(uid: uid).collection(ConstantesFirestore.coleccionRegistros)
     }
     
+    private static let ordenEmociones = ["Alegría", "Tristeza", "Miedo", "Ira", "Asco"]
+    
     func escucharDatos(){
-        // Consulta a "Emociones" en Firestore,  usando el idUsuario
         db.collection(ConstantesFirestore.coleccionEmociones)
             .addSnapshotListener { snapshot, error in
                 if let error = error {
@@ -55,14 +56,18 @@ class EmocionesViewModel {
                     print("Snapshot vacío o nil")
                     return
                 }
-                // Mapeo: del documento firestore al array de Gastos
-                self.emociones = documents.compactMap { doc -> Emocion? in
+                let mapped = documents.compactMap { doc -> Emocion? in
                     do {
                         return try doc.data(as: Emocion.self)
                     } catch {
                         print("Error al mapear: \(error.localizedDescription)")
                         return nil
                     }
+                }
+                self.emociones = mapped.sorted { e1, e2 in
+                    let i1 = Self.ordenEmociones.firstIndex(of: e1.nombre) ?? Int.max
+                    let i2 = Self.ordenEmociones.firstIndex(of: e2.nombre) ?? Int.max
+                    return i1 < i2
                 }
                 print(self.emociones.count)
             }
