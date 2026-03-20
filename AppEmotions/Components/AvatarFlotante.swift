@@ -140,6 +140,6 @@ struct ParticleView: View {
     ZStack {
         Color.gray.opacity(0.3)
             .ignoresSafeArea()
-        AvatarFlotante(tareasCompletadas: 4)
+        AvatarFlotante(tareasCompletadas: 0)
     }
 }

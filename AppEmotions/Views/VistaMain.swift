@@ -16,8 +16,8 @@ struct VistaMain: View {
     @State var loginViewModel: LoginViewModel
     
     let columnas = [
-            GridItem(.flexible()),
-            GridItem(.flexible())
+            GridItem(.flexible(), spacing: 20),
+            GridItem(.flexible(), spacing: 20)
     ]
     
     var body: some View {
@@ -40,34 +40,38 @@ struct VistaMain: View {
                     .cornerRadius(10)
                     .padding(10)
                     // Listado de emociones
-                    
-                        LazyVGrid(columns: columnas) {
-                            ForEach(viewModel.emociones) { emocion in
-                                NavigationLink {
-                                    VistaEmotionSingle(uid: uid, emocion: emocion)
-                                } label: {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color.customBlue)
-                                        VStack {
-                                            Image("ico\(emocion.image)")
-                                                .frame(width: 100, height: 100)
-                                            Text("Hola, soy...")
-                                                .foregroundStyle(Color.white)
-                                            Text(emocion.nombre)
-                                                .foregroundStyle(Color.white)
-                                                .font(.custom("", size: 23))
-                                                .bold()
-                                        }
-                                        .padding()
-                                    }
+                    LazyVGrid(columns: columnas, spacing: 20) {
+                        ForEach(viewModel.emociones) { emocion in
+                            NavigationLink {
+                                VistaEmotionSingle(uid: uid, emocion: emocion)
+                            } label: {
+                                VStack {
+                                        Image("ico\(emocion.image)")
+                                            .resizable()
+                                            .frame(width: 100, height: 100)
+                                            .aspectRatio(contentMode: .fill)
+                                        Text("Hola, soy...")
+                                            .foregroundStyle(Color.white)
+                                        Text(emocion.nombre)
+                                            .foregroundStyle(Color.white)
+                                            .font(.title)
+                                            .bold()
+//                                        }
+                                }
+                                .padding(.top, 20)
+                                .padding(.bottom, 60)
+                                .frame(maxWidth: .infinity)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color.customBlue.gradient)
+                                        // Aplicamos el skew solo al fondo
+                                        .transformEffect(.init(a: 1, b: -0.2, c: 0, d: 1, tx: 0, ty: 0))
                                 }
                             }
                         }
-                    
-//                    EmotionsList()
-                    .padding()
-                    
+                    }
+                    .padding(.vertical, 30)
+                    .padding(.horizontal, 10)
                 }
             }
             .background(.gray.opacity(0.5))
