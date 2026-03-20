@@ -21,13 +21,14 @@ struct VistaAnaliza: View {
     
     var body: some View {
         VStack{
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color(red: 0.235, green: 0.918, blue: 0.663))
-                    .frame(height: 100)
+            VStack {
                 Text(esEdicion ? "Editando análisis" : "¿Qué pensamientos tienes cuando viene o estás en esta emoción?")
                     .bold()
             }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.customGreen)
+            .cornerRadius(20)
             TextEditor(text: $respuestaEmocion)
                 .padding()
                 .background(.white)

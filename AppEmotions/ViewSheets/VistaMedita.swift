@@ -27,14 +27,14 @@ struct VistaMedita: View {
     
     var body: some View {
         VStack(spacing: 30) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color(red: 0.235, green: 0.918, blue: 0.663))
-                    .frame(height: 100)
+            VStack {
                 Text("Esta musica puede ayudarte a conectar con tu emoción y hace que la transites")
-                    .padding()
                     .bold()
             }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.customGreen)
+            .cornerRadius(20)
             // Controles del reproductor
             HStack {
                 Button{

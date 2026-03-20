@@ -28,14 +28,17 @@ struct VistaRegistroMalestar: View {
     
     var body: some View {
         VStack{
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color(red: 0.235, green: 0.918, blue: 0.663).gradient)
-                    .frame(height: 100)
+            VStack {
+//                RoundedRectangle(cornerRadius: 20)
+//                    .fill(Color(red: 0.235, green: 0.918, blue: 0.663).gradient)
+//                    .frame(height: 100)
                 Text(esEdicion ? "Editando registro de malestar" : "Este registro se usa para que puedas reflexionar sobre tus emociones y cómo te sientes en diferentes situaciones.")
                     .bold()
-                    .padding()
             }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.customGreen)
+            .cornerRadius(20)
             Form{
                 DatePicker("Fecha y hora", selection: $fecha)
                     .foregroundStyle(.secondary)

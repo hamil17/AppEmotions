@@ -89,7 +89,7 @@ struct VistaDashboard: View {
                         
                         VStack(alignment: .leading) {
                             ProgressView(value: dailyStats.todayProgress, total: 100)
-                                .tint(Color.customYellow)
+                                .tint(Color.customBlue)
                                 .scaleEffect(x: 1, y: 2, anchor: .center)
                             Text("\(Int(dailyStats.todayProgress))% completado (\(dailyStats.todayTasksCompleted)/\(dailyStats.totalTasks) objetivos)")
 //                                .font(.caption)
@@ -113,7 +113,7 @@ struct VistaDashboard: View {
                                                 x: .value("Día", item.date, unit: .day),
                                                 y: .value("Accesos", item.accessCount)
                                             )
-                                            .foregroundStyle(Color.customYellow)
+                                            .foregroundStyle(Color.customBlue)
                                         }
                                         .frame(height: 160)
                                     }
@@ -133,12 +133,12 @@ struct VistaDashboard: View {
                                     NavigationLink {
                                         VistaRegistroEmociones(uid: uid)
                                     } label: {
-                                        SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customYellow)
+                                        SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customBlue)
                                     }
                                     NavigationLink {
                                         VistaListaRegistrosMalestar(uid: uid)
                                     } label: {
-                                        SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customYellow)
+                                        SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customBlue)
                                     }
                                 }
                             }
@@ -146,7 +146,7 @@ struct VistaDashboard: View {
                             .frame(maxWidth: .infinity)
                             .background(
                                 RoundedRectangle(cornerRadius: 30)
-                                    .fill(Color.customGreen.gradient)
+                                    .fill(Color.customYellow.gradient)
                             )
                             
                         

@@ -14,18 +14,16 @@ struct SquareButton: View {
     let color: Color
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(color)
-            VStack {
+        VStack {
                 Image(image)
-//                    .frame(width: 100, height: 100)
                 Text(text)
                     .foregroundStyle(.white)
                     .bold()
-            }
-            .padding()
         }
+        .padding()
+//        .frame(maxWidth: .infinity)
+        .background(color)
+        .cornerRadius(20)
         
     }
 }

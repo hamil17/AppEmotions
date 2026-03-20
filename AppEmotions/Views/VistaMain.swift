@@ -26,6 +26,9 @@ struct VistaMain: View {
                 VStack {
                    // Imagen principal
                     Image("imgMain")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 300)
                         .padding(.top, 180)
                     
                     // Texto
@@ -63,7 +66,17 @@ struct VistaMain: View {
                                 .frame(maxWidth: .infinity)
                                 .background {
                                     RoundedRectangle(cornerRadius: 20)
-                                        .fill(Color.customBlue.gradient)
+//                                        .fill(Color.customBlue.gradient)
+                                        .fill(
+                                                    LinearGradient(
+                                                        stops: [
+                                                            .init(color: .customBlue.opacity(0.9), location: 0.1), // Empieza suave al 30%
+                                                            .init(color: .customBlue, location: 0.6)              // Termina sólido al final
+                                                        ],
+                                                        startPoint: .top,
+                                                        endPoint: .bottom
+                                                    )
+                                                )
                                         // Aplicamos el skew solo al fondo
                                         .transformEffect(.init(a: 1, b: -0.2, c: 0, d: 1, tx: 0, ty: 0))
                                 }
