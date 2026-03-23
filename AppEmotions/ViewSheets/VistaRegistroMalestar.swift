@@ -29,9 +29,6 @@ struct VistaRegistroMalestar: View {
     var body: some View {
         VStack{
             VStack {
-//                RoundedRectangle(cornerRadius: 20)
-//                    .fill(Color(red: 0.235, green: 0.918, blue: 0.663).gradient)
-//                    .frame(height: 100)
                 Text(esEdicion ? "Editando registro de malestar" : "Este registro se usa para que puedas reflexionar sobre tus emociones y cómo te sientes en diferentes situaciones.")
                     .bold()
             }
@@ -122,7 +119,6 @@ struct VistaRegistroMalestar: View {
                 .padding()
         }
         .onAppear {
-            dailyStats.listenToday(uid: uid)
             if let registro = registroExistente {
                 fecha = registro.fecha
                 situacion = registro.situacion
