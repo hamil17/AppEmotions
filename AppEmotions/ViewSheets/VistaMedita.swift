@@ -9,6 +9,7 @@ struct VistaMedita: View {
     @State private var dailyStats = DailyStatsViewModel()
     @State private var segundosReproduciendo: Int = 0
     @State private var tareaMarcada = false
+    @AppStorage("selectedAvatarModel") private var modeloAvatar: Int = 0
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -65,7 +66,7 @@ struct VistaMedita: View {
         .padding()
         .background(Color.customBlue)
         .overlay(alignment: .bottomTrailing) {
-            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted, modeloAvatar: modeloAvatar)
                 .padding()
         }
         .onAppear {

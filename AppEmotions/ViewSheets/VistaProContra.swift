@@ -15,7 +15,10 @@ struct VistaProContra: View {
     @State private var viewModel = ProsContrasViewModel()
     
     let uid: String
-    let idEmocion: String
+    var emocion: Emocion
+    var prosContrasExistente: ProsContras?
+    
+    private var esEdicion: Bool { prosContrasExistente != nil }
     
     var body: some View {
         VStack(spacing: 30) {
@@ -81,8 +84,20 @@ struct VistaProContra: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
-                Button("Guardar"){
-                    viewModel.guardar(uid: uid, situacion: situation, pros: pros, contras: contras, idEmocion: idEmocion)
+                Button(esEdicion ? "Guardar cambios" : "Guardar"){
+                    if esEdicion, let existente = prosContrasExistente {
+                        let actualizado = ProsContras(
+                            fecha: Date(),
+                            situacion: situation,
+                            pros: pros,
+                            contras: contras,
+                            idEmocion: emocion.id ?? "",
+                            id: existente.id
+                        )
+                        viewModel.actualizar(uid: uid, item: actualizado)
+                    } else {
+                        viewModel.guardar(uid: uid, situacion: situation, pros: pros, contras: contras, idEmocion: emocion.id ?? "")
+                    }
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -93,9 +108,16 @@ struct VistaProContra: View {
         }
         .padding()
         .background(Color.customBlue)
+        .onAppear {
+            if let existente = prosContrasExistente {
+                situation = existente.situacion
+                pros = existente.pros
+                contras = existente.contras
+            }
+        }
     }
 }
 
 #Preview {
-    VistaProContra(uid: "preview-uid", idEmocion: "preview-emocion")
+    VistaProContra(uid: "preview-uid", emocion: Emocion(nombre: "Alegría", descripcion: "", color: "yellow", image: "Alegria", sonido: ""))
 }

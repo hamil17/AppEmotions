@@ -33,6 +33,16 @@ struct TaskCheckRow: View {
 struct VistaDashboard: View {
     let uid: String
     @State private var dailyStats = DailyStatsViewModel()
+    @State private var showAvatarPicker: Bool = false
+    @AppStorage("selectedAvatarModel") private var selectedModel: Int = 0
+    
+    private var nivelAvatar: Int {
+        min(dailyStats.todayTasksCompleted, 3)
+    }
+    
+    private var nombreAvatar: String {
+        "avatar_\(selectedModel)_\(nivelAvatar)"
+    }
     
     private var motivationalMessage: String {
         let completed = dailyStats.todayTasksCompleted
@@ -69,11 +79,15 @@ struct VistaDashboard: View {
                             .padding(.top)
                             .padding(.bottom)
                         HStack(alignment: .top){
-                            let nivel = min(dailyStats.todayTasksCompleted, 3)
-                            Image("avatar_\(nivel)")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 150, height: 120)
+                            Button {
+                                showAvatarPicker = true
+                            } label: {
+                                Image(nombreAvatar)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 150, height: 120)
+                            }
+                            .buttonStyle(.plain)
                             VStack(alignment: .leading){
                                 Text(motivationalMessage)
                                     .font(.title2)
@@ -179,6 +193,9 @@ struct VistaDashboard: View {
             dailyStats.markTask(uid: uid, task: .didOpenDashboard)
             dailyStats.listenToday(uid: uid)
             dailyStats.listenRecentAccess(uid: uid)
+        }
+        .sheet(isPresented: $showAvatarPicker) {
+            AvatarPickerView()
         }
     }
 }

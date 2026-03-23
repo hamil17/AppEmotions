@@ -29,13 +29,13 @@ struct EmocionGestionala: View {
                 mostrarModal = true
                 tag = TagIDGestion(id: 1)
             } label: {
-                SquareButton(image: "icoSun", text: "Registro de situación", color: Color.customGreen)
+                SquareButton(image: "icoRegistro", text: "Registro de situación", color: Color.customGreen)
             }
             Button{
                 mostrarModal = true
                 tag = TagIDGestion(id: 2)
             } label: {
-                SquareButton(image: "icoSun", text: "Registro de Pros / Contras", color: Color.customGreen)
+                SquareButton(image: "icoProContra", text: "Registro de Pros / Contras", color: Color.customGreen)
             }
         }
 //        .sheet(isPresented: $mostrarModal){
@@ -46,7 +46,7 @@ struct EmocionGestionala: View {
                 VistaRegistroMalestar(uid: uid, emocion: emocion)
             }
             if item.id == 2 {
-                VistaProContra(uid: uid, idEmocion: emocion.id ?? "")
+                VistaProContra(uid: uid, emocion: emocion)
             }
         })
         Spacer()

@@ -14,6 +14,7 @@ struct VistaMain: View {
     @State private var dailyStats = DailyStatsViewModel()
     let uid: String
     @State var loginViewModel: LoginViewModel
+    @AppStorage("selectedAvatarModel") private var modeloAvatar: Int = 0
     
     let columnas = [
             GridItem(.flexible(), spacing: 20),
@@ -90,7 +91,7 @@ struct VistaMain: View {
             .background(.gray.opacity(0.5))
             .ignoresSafeArea()
             .overlay(alignment: .bottomTrailing) {
-                AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+                AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted, modeloAvatar: modeloAvatar)
                     .padding()
             }
             .navigationTitle("EmotionsConnect")

@@ -16,9 +16,14 @@ struct SquareButton: View {
     var body: some View {
         VStack {
                 Image(image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 60, height: 60)
                 Text(text)
                     .foregroundStyle(.white)
                     .bold()
+                    
+                    
         }
         .padding()
         .frame(maxWidth: .infinity)

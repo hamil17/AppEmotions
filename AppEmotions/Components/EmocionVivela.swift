@@ -31,14 +31,14 @@ struct EmocionVivela: View {
                 mostrarModal = true
                 tag = TagID(id: 1)
             } label: {
-                SquareButton(image: "icoMedal", text: "Analiza", color: Color.customGreen)
+                SquareButton(image: "icoAnaliza", text: "Analiza", color: Color.customGreen)
             }
             
             Button{
                 mostrarModal = true
                 tag = TagID(id: 2)
             } label: {
-                SquareButton(image: "icoSun", text: "Medita", color: Color.customGreen)
+                SquareButton(image: "icoMedita", text: "Medita", color: Color.customGreen)
             }
             
 //            Button{

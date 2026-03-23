@@ -12,6 +12,7 @@ struct VistaAnaliza: View {
     @State var viewModel = EmocionesViewModel()
     @State private var dailyStats = DailyStatsViewModel()
     @State private var respuestaEmocion: String = ""
+    @AppStorage("selectedAvatarModel") private var modeloAvatar: Int = 0
     
     let uid: String
     var emocion:Emocion
@@ -73,7 +74,7 @@ struct VistaAnaliza: View {
         .padding()
         .background(Color.customBlue)
         .overlay(alignment: .bottomTrailing) {
-            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted, modeloAvatar: modeloAvatar)
                 .padding()
         }
         .onAppear(){

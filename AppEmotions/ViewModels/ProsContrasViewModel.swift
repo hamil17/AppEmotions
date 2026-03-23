@@ -102,4 +102,21 @@ class ProsContrasViewModel {
             }
         }
     }
+    
+    func actualizar(uid: String, item: ProsContras) {
+        let docRef = prosContrasRef(uid: uid).document(item.id)
+        let data: [String: Any] = [
+            "situacion": item.situacion,
+            "pros": item.pros,
+            "contras": item.contras,
+            "idEmocion": item.idEmocion
+        ]
+        docRef.setData(data, merge: true) { error in
+            if let error = error {
+                print("Error actualizando ProsContras: \(error)")
+            } else {
+                print("ProsContras actualizado correctamente")
+            }
+        }
+    }
 }

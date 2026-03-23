@@ -9,11 +9,14 @@ import SwiftUI
 
 struct AvatarFlotante: View {
     let tareasCompletadas: Int
+    var modeloAvatar: Int = 0
     
     @State private var offset: CGSize = .zero
     @State private var lastOffset: CGSize = .zero
     @State private var scale: CGFloat = 1.0
     @State private var showParticles: Bool = false
+    @State private var isDragging: Bool = false
+    @State private var rotation: Double = 0
     
     private let totalTareas = 4
     
@@ -28,7 +31,7 @@ struct AvatarFlotante: View {
     }
     
     private var nombreImagen: String {
-        "avatar_\(nivelAvatar)"
+        "avatar_\(modeloAvatar)_\(nivelAvatar)"
     }
     
     private var mensajeMotivacional: String {
@@ -57,6 +60,7 @@ struct AvatarFlotante: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 80)
                     .scaleEffect(scale)
+                    .rotationEffect(.degrees(rotation))
                     .shadow(color: .black.opacity(0.3), radius: 5, x: 2, y: 2)
 //                    .shadow(color: .white, radius: 10, x: 0, y: 0)
             }
@@ -74,13 +78,21 @@ struct AvatarFlotante: View {
         .gesture(
             DragGesture()
                 .onChanged { value in
+                    isDragging = true
                     offset = CGSize(
                         width: lastOffset.width + value.translation.width,
                         height: lastOffset.height + value.translation.height
                     )
+                    withAnimation(.linear(duration: 0.1).repeatForever(autoreverses: true)) {
+                        rotation = 3
+                    }
                 }
                 .onEnded { _ in
+                    isDragging = false
                     lastOffset = offset
+                    withAnimation(.linear(duration: 0.1)) {
+                        rotation = 0
+                    }
                 }
         )
         .onChange(of: tareasCompletadas) { _, newValue in
