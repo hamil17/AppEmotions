@@ -96,7 +96,7 @@ struct VistaDashboard: View {
                                     TaskCheckRow(title: "Explorar emociones", description: "(Solo entra a una emoción)", completed: dailyStats.taskExploreEmotionCompleted)
                                     TaskCheckRow(title: "Analizar una emoción", description: "(Emoción -> Analiza)", completed: dailyStats.taskAnalyzeCompleted)
                                     TaskCheckRow(title: "Meditar 30 segundos ", description: "(Emoción -> Medita)", completed: dailyStats.taskMeditateCompleted)
-                                    TaskCheckRow(title: "Abrir Dashboard", description: "(Ya estas aquí 😉)", completed: dailyStats.taskOpenDashboardCompleted)
+                                    TaskCheckRow(title: "Abrir Dashboard", description: "(Ya estas aquí (^_~)", completed: dailyStats.taskOpenDashboardCompleted)
                                 }
                                 .padding()
                                 .background(Color.white.opacity(0.9))

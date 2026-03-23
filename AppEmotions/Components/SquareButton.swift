@@ -18,7 +18,7 @@ struct SquareButton: View {
                 Image(image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 60, height: 60)
+                    .frame(width: 45, height: 60)
                 Text(text)
                     .foregroundStyle(.white)
                     .bold()
@@ -34,5 +34,5 @@ struct SquareButton: View {
 }
 
 #Preview {
-    SquareButton(image: "icoArrow", text: "Entiendela", color: Color.customBlue)
+    SquareButton(image: "icoMedita", text: "Entiendela", color: Color.customBlue)
 }
