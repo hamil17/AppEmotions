@@ -28,7 +28,7 @@ struct VistaMedita: View {
     var body: some View {
         VStack(spacing: 30) {
             VStack {
-                Text("Esta musica puede ayudarte a conectar con tu emoción y hace que la transites")
+                Text("Estos sonidos, pueden ayudarte a conectar, sentir, o descubrir que como se siente la emoción, !Intentalo!")
                     .bold()
             }
             .padding()

@@ -22,7 +22,7 @@ struct VistaAnaliza: View {
     var body: some View {
         VStack{
             VStack {
-                Text(esEdicion ? "Editando análisis" : "¿Qué pensamientos tienes cuando viene o estás en esta emoción?")
+                Text(esEdicion ? "Editando análisis" : "¿Qué pensamientos o sensaciones tienes cuando estás en esta emoción, sabrías explicarlo con palabras?")
                     .bold()
             }
             .padding()

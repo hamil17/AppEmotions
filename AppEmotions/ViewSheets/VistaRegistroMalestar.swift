@@ -29,7 +29,7 @@ struct VistaRegistroMalestar: View {
     var body: some View {
         VStack{
             VStack {
-                Text(esEdicion ? "Editando registro de malestar" : "Este registro se usa para que puedas reflexionar sobre tus emociones y cómo te sientes en diferentes situaciones.")
+                Text(esEdicion ? "Editando registro de situación" : "Este registro se usa para que puedas reflexionar sobre situaciones específicas y cómo te sientes")
                     .bold()
             }
             .padding()
@@ -67,6 +67,7 @@ struct VistaRegistroMalestar: View {
                     ) {
                     Slider(value: $nivelMalestar, in: 1...10, step: 1){
                     }
+                    .tint(Color.customGreen)
                 }
                 
                 
@@ -114,10 +115,6 @@ struct VistaRegistroMalestar: View {
         }
         .padding()
         .background(Color.customBlue)
-        .overlay(alignment: .bottomTrailing) {
-            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted)
-                .padding()
-        }
         .onAppear {
             if let registro = registroExistente {
                 fecha = registro.fecha

@@ -21,7 +21,7 @@ struct SquareButton: View {
                     .bold()
         }
         .padding()
-//        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity)
         .background(color)
         .cornerRadius(20)
         

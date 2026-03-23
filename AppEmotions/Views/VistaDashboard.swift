@@ -10,15 +10,21 @@ import Charts
 
 struct TaskCheckRow: View {
     let title: String
+    let description : String
     let completed: Bool
     
     var body: some View {
         HStack {
             Image(systemName: completed ? "checkmark.circle.fill" : "circle")
                 .foregroundStyle(completed ? Color.customBlue : .gray)
-            Text(title)
-                .foregroundStyle(completed ? .primary : .secondary)
-                .font(.caption)
+            VStack(alignment: .leading){
+                Text(title)
+                    .foregroundStyle(completed ? .primary : .secondary)
+                    .font(.caption)
+                Text(description)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
             Spacer()
         }
     }
@@ -73,10 +79,10 @@ struct VistaDashboard: View {
                                     .font(.title2)
                                     .bold()
                                 VStack(alignment: .leading, spacing: 12) {
-                                    TaskCheckRow(title: "Explorar emociones", completed: dailyStats.taskExploreEmotionCompleted)
-                                    TaskCheckRow(title: "Analizar una emoción", completed: dailyStats.taskAnalyzeCompleted)
-                                    TaskCheckRow(title: "Meditar 30 segundos", completed: dailyStats.taskMeditateCompleted)
-                                    TaskCheckRow(title: "Abrir Dashboard", completed: dailyStats.taskOpenDashboardCompleted)
+                                    TaskCheckRow(title: "Explorar emociones", description: "(Solo entra a una emoción)", completed: dailyStats.taskExploreEmotionCompleted)
+                                    TaskCheckRow(title: "Analizar una emoción", description: "(Emoción -> Analiza)", completed: dailyStats.taskAnalyzeCompleted)
+                                    TaskCheckRow(title: "Meditar 30 segundos ", description: "(Emoción -> Medita)", completed: dailyStats.taskMeditateCompleted)
+                                    TaskCheckRow(title: "Abrir Dashboard", description: "(Ya estas aquí 😉)", completed: dailyStats.taskOpenDashboardCompleted)
                                 }
                                 .padding()
                                 .background(Color.white.opacity(0.9))
@@ -125,20 +131,25 @@ struct VistaDashboard: View {
                                     .padding(.bottom, 30)
                                 
                                 let columnas = [
-                                    GridItem(.flexible(), spacing: 20),
-                                    GridItem(.flexible(), spacing: 20)
+                                    GridItem(.flexible(), spacing: 10),
+                                    GridItem(.flexible(), spacing: 10)
                                 ]
                                 
                                 LazyVGrid(columns: columnas, spacing: 10) {
                                     NavigationLink {
                                         VistaRegistroEmociones(uid: uid)
                                     } label: {
-                                        SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customBlue)
+                                        SquareButton(image: "icoSun", text: "Registro de emociones", color: Color.customBlue)
                                     }
                                     NavigationLink {
                                         VistaListaRegistrosMalestar(uid: uid)
                                     } label: {
-                                        SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customBlue)
+                                        SquareButton(image: "icoSun", text: "Registro de situación", color: Color.customBlue)
+                                    }
+                                    NavigationLink {
+                                        VistaListaProsContras(uid: uid)
+                                    } label: {
+                                        SquareButton(image: "icoSun", text: "Resgistro de Pros y Contras", color: Color.customBlue)
                                     }
                                 }
                             }

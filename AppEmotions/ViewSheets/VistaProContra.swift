@@ -12,6 +12,10 @@ struct VistaProContra: View {
     @State var pros: String = ""
     @State var contras: String = ""
     @State private var situation: String = ""
+    @State private var viewModel = ProsContrasViewModel()
+    
+    let uid: String
+    let idEmocion: String
     
     var body: some View {
         VStack(spacing: 30) {
@@ -78,6 +82,7 @@ struct VistaProContra: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
                 Button("Guardar"){
+                    viewModel.guardar(uid: uid, situacion: situation, pros: pros, contras: contras, idEmocion: idEmocion)
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -92,5 +97,5 @@ struct VistaProContra: View {
 }
 
 #Preview {
-    VistaProContra()
+    VistaProContra(uid: "preview-uid", idEmocion: "preview-emocion")
 }
