@@ -54,7 +54,7 @@ struct VistaRespira: View {
     }
     
     private var colorFase: Color {
-        esFaseMantener ? .red : (esFaseInhalar ? .cyan : .green)
+        esFaseMantener ? .red : (esFaseInhalar ? .cyan : .mint)
     }
     
     private var progresoAnimado: Double {
@@ -92,9 +92,8 @@ struct VistaRespira: View {
             }
             .pickerStyle(.segmented)
             .disabled(estaActivo)
-            .padding(.horizontal)
-            .foregroundStyle(.white)
-            .tint(.white)
+//            .padding(.horizontal)
+            .preferredColorScheme(.dark)
             
             ZStack {
                 Circle()
@@ -145,7 +144,7 @@ struct VistaRespira: View {
             .padding(.vertical, 20)
             
             Text("Ciclos: \(repeticiones)")
-                .font(.title3)
+                .font(.title3.bold())
                 .foregroundStyle(.white)
             
             Spacer()
@@ -166,7 +165,7 @@ struct VistaRespira: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(estaActivo ? .orange : Color.customGreen)
+                .tint(estaActivo ? .brown : Color.customGreen)
             }
             .font(.title3)
         }
