@@ -43,6 +43,20 @@ Herramienta de auto-observación que te permite documentar:
 - Conducta resultante
 - Nivel de malestar (1-10)
 
+### ⚖️ Pros y Contras
+Herramienta de análisis cognitivo para evaluar situaciones:
+- Registra la situación que te preocupa
+- Analiza pros y contras de forma guiada
+- Visualiza el historial por emoción
+
+### 🌬️ Respiración Guiada
+Técnicas de respiración para calmar la ansiedad:
+- 4-2-6 (Inhalar 4s, Mantener 2s, Exhalar 6s)
+- 4-2-6-2 (Inhalar 4s, Mantener 2s, Exhalar 6s, Mantener 2s)
+- Círculo animado que guía visualmente
+- Vibración al cambiar de fase
+- Contador de repeticiones
+
 ### 🎮 Gamificación
 Sistema de progreso diario con:
 - Avatar evolutivo que cambia según tu actividad
