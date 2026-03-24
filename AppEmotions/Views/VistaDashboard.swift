@@ -37,7 +37,14 @@ struct VistaDashboard: View {
     @AppStorage("selectedAvatarModel") private var selectedModel: Int = 0
     
     private var nivelAvatar: Int {
-        min(dailyStats.todayTasksCompleted, 4)
+        switch dailyStats.todayTasksCompleted {
+        case 0: return 0
+        case 1: return 1
+        case 2: return 2
+        case 3: return 2
+        case 4: return 3
+        default: return 3
+        }
     }
     
     private var nombreAvatar: String {
