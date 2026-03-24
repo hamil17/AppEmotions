@@ -74,7 +74,7 @@ struct VistaRegistroMalestar: View {
             }
             .cornerRadius(40)
             HStack{
-                Button("Cancelar") {
+                Button("Cerrar") {
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)

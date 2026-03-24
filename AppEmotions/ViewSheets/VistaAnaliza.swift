@@ -40,7 +40,7 @@ struct VistaAnaliza: View {
             Spacer()
             
             HStack{
-                Button("Cancelar") {
+                Button("Cerrar") {
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)

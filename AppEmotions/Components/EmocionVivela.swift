@@ -41,6 +41,13 @@ struct EmocionVivela: View {
                 SquareButton(image: "icoMedita", text: "Medita", color: Color.customGreen)
             }
             
+            Button{
+                mostrarModal = true
+                tag = TagID(id: 3)
+            } label: {
+                SquareButton(image: "icoRespira", text: "Respira", color: Color.customGreen)
+            }
+            
 //            Button{
 //                mostrarModal = true
 //                tag = TagID(id: 3)
@@ -63,7 +70,7 @@ struct EmocionVivela: View {
                 VistaMedita(uid: uid, emocion: emocion)
             }
             if item.id == 3 {
-                Text("Vista Ejercita")
+                VistaRespira()
             }
             if item.id == 4 {
                 Text("Vista Siente")
