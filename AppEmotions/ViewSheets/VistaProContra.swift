@@ -39,16 +39,17 @@ struct VistaProContra: View {
                 }
                 
                 HStack {
-                    VStack{
+                    VStack(alignment: .leading){
                         Text("Pros")
                         TextEditor(text: $pros)
                             .padding(5)
                             .frame(minHeight: 300)
-                            .background(.green.opacity(0.1))
+                            .foregroundStyle(.green)
+//                            .background(.green.opacity(0.1))
                             .cornerRadius(20)
                             .overlay(
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                        .stroke(Color.green.opacity(0.3), lineWidth: 1)
                                 )
                             .onChange(of: pros) { oldValue, newValue in
                                             if newValue.isEmpty { return }
@@ -56,16 +57,17 @@ struct VistaProContra: View {
                                             if newValue.hasSuffix("\n") { pros += "• " }
                             }
                     }
-                    VStack{
+                    VStack(alignment: .leading){
                         Text("Contras")
                         TextEditor(text: $contras)
                             .padding(5)
                             .frame(minHeight: 300)
-                            .background(.red.opacity(0.1))
+                            .foregroundStyle(.red)
+//                            .background(.red.opacity(0.1))
                             .cornerRadius(20)
                             .overlay(
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                        .stroke(Color.red.opacity(0.3), lineWidth: 1)
                                 )
                             .onChange(of: contras) { oldValue, newValue in
                                             if newValue.isEmpty { return }
@@ -102,7 +104,7 @@ struct VistaProContra: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .foregroundStyle(.black)
-                .tint(Color(red: 0.235, green: 0.918, blue: 0.663))
+                .tint(Color.customGreen)
                 .disabled(situation.isEmpty || pros.isEmpty || contras.isEmpty)
             }
         }
