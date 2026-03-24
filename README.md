@@ -217,7 +217,7 @@ La app está diseñada para ayudarte a:
 ## 👥 Equipo
 
 Desarrollado con ❤️ por **HamDsgn**
-<img src="AppEmotions/Assets.xcassets/hamdsgn.imageset/hamdsgn.png" width="60" alt="HamDsgn">
+<p><img src="AppEmotions/Assets.xcassets/hamdsgn.imageset/hamdsgn.png" width="60" alt="HamDsgn"></p>
 
 ## 📄 Licencia
 
