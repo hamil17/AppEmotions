@@ -77,28 +77,33 @@ Sistema de progreso diario con:
 
 ```
 AppEmotions/
-├── AppEmotionsApp.swift       # Punto de entrada
-├── ContentView.swift          # Vista raíz (auth/main)
-├── Assets.xcassets/           # Imágenes y recursos
-├── Components/                # Componentes reutilizables
-│   └── AvatarFlotante.swift   # Avatar gamificado
-├── Models/                    # Modelos de datos
+├── AppEmotionsApp.swift           # Punto de entrada
+├── ContentView.swift              # Vista raíz (auth/main)
+├── Assets.xcassets/               # Imágenes y recursos
+├── Components/                    # Componentes reutilizables
+│   ├── AvatarFlotante.swift      # Avatar gamificado
+│   ├── AvatarPickerView.swift     # Selector de avatar
+│   └── EmocionGestionala.swift    # Gestión emocional
+├── Models/                        # Modelos de datos
 │   ├── Emocion.swift
 │   ├── Registro.swift
-│   └── Respuesta.swift
-├── ViewModels/                # Lógica de negocio
+│   ├── Respuesta.swift
+│   └── ProsContras.swift          # Análisis pros/contras
+├── ViewModels/                    # Lógica de negocio
 │   ├── DailyStatsViewModel.swift
 │   ├── EmocionesViewModel.swift
 │   ├── LoginViewModel.swift
-│   └── ...
-├── Views/                     # Vistas principales
+│   └── ProsContrasViewModel.swift
+├── Views/                         # Vistas principales
 │   ├── VistaDashboard.swift
 │   ├── VistaEmotionSingle.swift
 │   ├── VistaMain.swift
-│   └── ...
-└── ViewSheets/               # Hojas modales
+│   └── VistaListaProsContras.swift
+└── ViewSheets/                    # Hojas modales
     ├── VistaAnaliza.swift
     ├── VistaMedita.swift
+    ├── VistaRespira.swift         # Respiración guiada
+    ├── VistaProContra.swift
     └── VistaRegistroMalestar.swift
 ```
 
@@ -143,7 +148,9 @@ La app está diseñada para ayudarte a:
 - ✅ **Identificar** patrones en tus respuestas emocionales
 - ✅ **Desarrollar** estrategias saludables de gestión
 - ✅ **Practicar** técnicas de meditación y mindfulness
-- ✅ ** Reflexionar** sobre tu vida emocional
+- ✅ **Reflexionar** sobre tu vida emocional
+- ✅ **Regular** tu respiración para calmar la ansiedad
+- ✅ **Analizar** situaciones desde múltiples perspectivas
 
 ## 🔒 Privacidad
 
