@@ -6,6 +6,16 @@
   <img src="AppEmotions/Assets.xcassets/AppIcon.appiconset/LogoApp.png" width="120" alt="AppEmotions Logo">
 </p>
 
+## 📸 Capturas de Pantalla
+
+<p align="center">
+  <img src="AppEmotions/Assets.xcassets/screen_1.imageset/screen_1.png" width="200" alt="Screen 1">
+  <img src="AppEmotions/Assets.xcassets/screen_2.imageset/screen_2.png" width="200" alt="Screen 2">
+  <img src="AppEmotions/Assets.xcassets/screen_3.imageset/screen_3.png" width="200" alt="Screen 3">
+  <img src="AppEmotions/Assets.xcassets/screen_4.imageset/screen_4.png" width="200" alt="Screen 4">
+  <img src="AppEmotions/Assets.xcassets/screen_5.imageset/screen_5.png" width="200" alt="Screen 5">
+</p>
+
 ## 📱 Descripción
 
 **AppEmotions** es una aplicación de salud mental diseñada para ayudarte a comprender, experimentar y gestionar tus emociones de manera saludable. A través de actividades guiada y auto-reflexión, podrás desarrollar mayor inteligencia emocional.
@@ -39,14 +49,18 @@ Explora las 5 emociones básicas:
 Cada emoción incluye 3 pestañas de trabajo:
 
 1. **Entiendela** - Aprende qué es la emoción, cómo se manifiesta y su propósito
-2. **Vívela** - Dos actividades prácticas:
+2. **Vívela** - Tres actividades prácticas:
 
    * **Analiza** - Reflexiona sobre tus pensamientos cuando experimentas la emoción
 
    * **Medita** - Audio de meditación para conectar con la emoción
 
    * **Respira** - Contador para respiraciones guiadas
-3. **Gestiónala** - Registra y comprende cómo manejas cada emoción
+3. **Gestiónala** - Dos registros para comprender cómo manejas cada emoción:
+
+   * **Registro de malestar** - Documenta situación, pensamientos, emociones y nivel de malestar
+
+   * **Pros y Contras** - Analiza situaciones desde múltiples perspectivas
 
 ### 📝 Registro de Malestar
 
