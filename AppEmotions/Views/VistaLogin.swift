@@ -17,52 +17,88 @@ struct VistaLogin: View {
     @State private var mensajeError : String?
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text(seEstaRegistrando ? "Crear cuenta" : "Bienvenido/a")
-                .font(.largeTitle)
-                .bold()
-            
-            TextField("Email", text: $email)
-                .textFieldStyle(.roundedBorder)
-                .textInputAutocapitalization(.never)
-                .keyboardType(.emailAddress)
-            
-            SecureField("Contraseña", text: $password)
-                .textFieldStyle(.roundedBorder)
-            
-            if let mensajeError {
-                Text(mensajeError)
-                    .foregroundStyle(.red)
-                    .font(.caption)
+        VStack(spacing: 30) {
+            VStack(){
+                Image("imgMain")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 300)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(height: 550)
+            .background(
+                WaveShape(waveHeight: 15, phase: .zero)
+                    .fill(Color.customGreen) // Tu color de fondo
+                    .shadow(radius: 5)
+            )
             
-            // Botón de inicio de sesión o registro
-            Button{
-                logeando = true
-                Task {
-                    await autenticar()
+            
+          
+            VStack(alignment: .leading){
+                Text(seEstaRegistrando ? "Crear cuenta" : "Bienvenido/a")
+                    .font(.largeTitle)
+                    .foregroundStyle(Color.customBlue)
+                    .bold()
+                
+                TextField("Email", text: $email)
+                    .textFieldStyle(.roundedBorder)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.emailAddress)
+                
+                SecureField("Contraseña", text: $password)
+                    .textFieldStyle(.roundedBorder)
+                
+                if let mensajeError {
+                    Text(mensajeError)
+                        .foregroundStyle(.red)
+                        .font(.caption)
                 }
-            } label: {
-                Text(seEstaRegistrando ? "Registrarse" : "Iniciar sesión")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
+                
+                
+                
+                
+                
+                
             }
-            .disabled(email.isEmpty || password.isEmpty || logeando)
-            .opacity(email.isEmpty || password.isEmpty || logeando ? 0.5 : 1.0)
+            .padding(.horizontal)
             
-            // Botón para cambiar a registro o a inicio de sesión, tiene apariencia de enlace
-            Button {
-                seEstaRegistrando.toggle()
-                mensajeError = nil
-            } label: {
-                Text(seEstaRegistrando ? "¿Ya tienes una cuenta? ¡Entra!" : "¿No tienes cuenta? ¡Registrate!")
-                    .foregroundStyle(.blue)
+            Spacer()
+            
+            VStack{
+                // Botón de inicio de sesión o registro
+                Button{
+                    logeando = true
+                    Task {
+                        await autenticar()
+                    }
+                } label: {
+                    Text(seEstaRegistrando ? "Registrarse" : "Iniciar sesión")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.customBlue)
+                        .foregroundStyle(.white)
+                        .bold()
+                        .cornerRadius(10)
+                }
+                .disabled(email.isEmpty || password.isEmpty || logeando)
+                .opacity(email.isEmpty || password.isEmpty || logeando ? 0.5 : 1.0)
+                
+                // Botón para cambiar a registro o a inicio de sesión, tiene apariencia de enlace
+                Button {
+                    seEstaRegistrando.toggle()
+                    mensajeError = nil
+                } label: {
+                    Text(seEstaRegistrando ? "¿Ya tienes una cuenta? ¡Entra!" : "¿No tienes cuenta? ¡Registrate!")
+                        .foregroundStyle(.gray)
+                }
             }
+            .padding(.horizontal)
+            .padding(.bottom, 120)
         }
-        .padding()
+        .ignoresSafeArea()
+        .background(.gray.opacity(0.3))
+        
+        
     }
     
     func autenticar() async {
@@ -80,7 +116,29 @@ struct VistaLogin: View {
     }
 }
 
-//#Preview {
-//    @Bindable var authManager : AuthManager
-//    VistaLogin(authManager)
-//}
+struct WaveShape: Shape {
+    var waveHeight: CGFloat // Qué tan profunda es la onda
+    var phase: Angle        // Para animarla si quieres
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: .zero) // Esquina superior izquierda
+        path.addLine(to: CGPoint(x: rect.width, y: 0)) // Superior derecha
+        path.addLine(to: CGPoint(x: rect.width, y: rect.height - waveHeight)) // Lateral derecho
+        
+        // Dibujamos la onda en la base
+        for x in stride(from: rect.width, through: 0, by: -1) {
+            let relativeX = x / rect.width
+            let sine = sin(relativeX * .pi * 2 + CGFloat(phase.radians))
+            let y = rect.height - waveHeight - (sine * waveHeight)
+            path.addLine(to: CGPoint(x: x, y: y))
+        }
+        
+        path.closeSubpath()
+        return path
+    }
+}
+
+#Preview {
+    VistaLogin(loginViewModel: LoginViewModel())
+}
