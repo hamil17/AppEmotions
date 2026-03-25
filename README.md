@@ -9,11 +9,11 @@
 ## 📸 Capturas de Pantalla
 
 <p align="center">
-  <img src="AppEmotions/Assets.xcassets/screen_1.imageset/screen_1.png" width="200" alt="Screen 1">
-  <img src="AppEmotions/Assets.xcassets/screen_2.imageset/screen_2.png" width="200" alt="Screen 2">
-  <img src="AppEmotions/Assets.xcassets/screen_3.imageset/screen_3.png" width="200" alt="Screen 3">
-  <img src="AppEmotions/Assets.xcassets/screen_4.imageset/screen_4.png" width="200" alt="Screen 4">
-  <img src="AppEmotions/Assets.xcassets/screen_5.imageset/screen_5.png" width="200" alt="Screen 5">
+  <img src="AppEmotions/Assets.xcassets/screen_1.imageset/Simulator Screenshot - iPhone 17 Pro - 2026-03-25 at 14.12.38.png" width="200" alt="Screen 1">
+  <img src="AppEmotions/Assets.xcassets/screen_2.imageset/Simulator Screenshot - iPhone 17 Pro - 2026-03-25 at 14.14.20.png" width="200" alt="Screen 2">
+  <img src="AppEmotions/Assets.xcassets/screen_3.imageset/Simulator Screenshot - iPhone 17 Pro - 2026-03-25 at 14.14.45.png" width="200" alt="Screen 3">
+  <img src="AppEmotions/Assets.xcassets/screen_4.imageset/Simulator Screenshot - iPhone 17 Pro - 2026-03-25 at 14.14.48.png" width="200" alt="Screen 4">
+  <img src="AppEmotions/Assets.xcassets/screen_5.imageset/Simulator Screenshot - iPhone 17 Pro - 2026-03-25 at 14.14.50.png" width="200" alt="Screen 5">
 </p>
 
 ## 📱 Descripción
