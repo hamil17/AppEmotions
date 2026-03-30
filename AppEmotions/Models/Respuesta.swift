@@ -9,12 +9,19 @@ import Foundation
 import FirebaseFirestore
 
 struct Respuesta: Identifiable, Codable {
-    @DocumentID var id: String?
-    
+    var id: String = UUID().uuidString
     var texto: String
     var idEmocion: String
+    var fecha: Date
     
     enum CodingKeys: String, CodingKey {
-        case texto, idEmocion
+        case texto, idEmocion, fecha
+    }
+    
+    init(texto: String, idEmocion: String, fecha: Date, id: String = UUID().uuidString) {
+        self.texto = texto
+        self.idEmocion = idEmocion
+        self.fecha = fecha
+        self.id = id
     }
 }

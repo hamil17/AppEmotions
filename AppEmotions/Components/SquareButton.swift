@@ -14,22 +14,25 @@ struct SquareButton: View {
     let color: Color
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(color.gradient)
-            VStack {
+        VStack {
                 Image(image)
-//                    .frame(width: 100, height: 100)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 45, height: 60)
                 Text(text)
                     .foregroundStyle(.white)
                     .bold()
-            }
-            .padding()
+                    
+                    
         }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(color)
+        .cornerRadius(20)
         
     }
 }
 
 #Preview {
-    SquareButton(image: "icoArrow", text: "Entiendela", color: Color.customBlue)
+    SquareButton(image: "icoMedita", text: "Entiendela", color: Color.customBlue)
 }

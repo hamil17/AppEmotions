@@ -10,19 +10,26 @@ import SwiftUI
 struct VistaAnaliza: View {
     @Environment(\.dismiss) var dismiss
     @State var viewModel = EmocionesViewModel()
+    @State private var dailyStats = DailyStatsViewModel()
     @State private var respuestaEmocion: String = ""
+    @AppStorage("selectedAvatarModel") private var modeloAvatar: Int = 0
     
+    let uid: String
     var emocion:Emocion
+    var respuestaExistente: Respuesta?
+    
+    private var esEdicion: Bool { respuestaExistente != nil }
     
     var body: some View {
         VStack{
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color(red: 0.235, green: 0.918, blue: 0.663))
-                    .frame(height: 100)
-                Text("¿Qué pensamientos tienes cuando viene o estás en esta emoción?")
+            VStack {
+                Text(esEdicion ? "Editando análisis" : "¿Qué pensamientos o sensaciones tienes cuando estás en esta emoción, sabrías explicarlo con palabras?")
                     .bold()
             }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.customGreen)
+            .cornerRadius(20)
             TextEditor(text: $respuestaEmocion)
                 .padding()
                 .background(.white)
@@ -38,8 +45,23 @@ struct VistaAnaliza: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.black)
-                Button("Guardar"){
-                    viewModel.anadirRespuesta(texto: respuestaEmocion, idEmocion: emocion.id ?? "No ID = desde el canvas")
+                Button(esEdicion ? "Guardar cambios" : "Guardar"){
+                    if esEdicion, let respuesta = respuestaExistente {
+                        let respuestaActualizada = Respuesta(
+                            texto: respuestaEmocion,
+                            idEmocion: respuesta.idEmocion,
+                            fecha: Date(),
+                            id: respuesta.id
+                        )
+                        RegistroEmocionesViewModel().actualizarRespuesta(uid: uid, respuesta: respuestaActualizada)
+                    } else {
+                        viewModel.anadirRespuesta(
+                            uid: uid,
+                            texto: respuestaEmocion,
+                            idEmocion: emocion.id ?? "No ID = desde el canvas"
+                        )
+                        dailyStats.markTask(uid: uid, task: .didAnalyze)
+                    }
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -51,13 +73,25 @@ struct VistaAnaliza: View {
         }
         .padding()
         .background(Color.customBlue)
+        .overlay(alignment: .bottomTrailing) {
+            AvatarFlotante(tareasCompletadas: dailyStats.todayTasksCompleted, modeloAvatar: modeloAvatar)
+                .padding()
+        }
         .onAppear(){
-            // Carga al entrar en la vista
-            viewModel.cargarRespuesta(idEmocion: emocion.id ?? "No ID", bindingTexto: $respuestaEmocion)
+            dailyStats.listenToday(uid: uid)
+            if let respuesta = respuestaExistente {
+                respuestaEmocion = respuesta.texto
+            } else {
+                viewModel.cargarRespuesta(
+                    uid: uid,
+                    idEmocion: emocion.id ?? "No ID",
+                    bindingTexto: $respuestaEmocion
+                )
+            }
         }
     }
 }
 
 #Preview {
-    VistaAnaliza(emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
+    VistaAnaliza(uid: "preview-uid", emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
 }

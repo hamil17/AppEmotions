@@ -6,14 +6,76 @@
 //
 
 import SwiftUI
+import Charts
+
+struct TaskCheckRow: View {
+    let title: String
+    let description : String
+    let completed: Bool
+    
+    var body: some View {
+        HStack {
+            Image(systemName: completed ? "checkmark.circle.fill" : "circle")
+                .foregroundStyle(completed ? Color.customBlue : .gray)
+            VStack(alignment: .leading){
+                Text(title)
+                    .foregroundStyle(completed ? .primary : .secondary)
+                    .font(.caption)
+                Text(description)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+        }
+    }
+}
 
 struct VistaDashboard: View {
-    @State private var valor = 50.0
-    @State private var mostrarModal = false
+    let uid: String
+    @State private var dailyStats = DailyStatsViewModel()
+    @State private var showAvatarPicker: Bool = false
+    @AppStorage("selectedAvatarModel") private var selectedModel: Int = 0
+    
+    private var nivelAvatar: Int {
+        switch dailyStats.todayTasksCompleted {
+        case 0: return 0
+        case 1: return 1
+        case 2: return 2
+        case 3: return 2
+        case 4: return 3
+        default: return 3
+        }
+    }
+    
+    private var nombreAvatar: String {
+        "avatar_\(selectedModel)_\(nivelAvatar)"
+    }
+    
+    private var motivationalMessage: String {
+        let completed = dailyStats.todayTasksCompleted
+        let total = dailyStats.totalTasks
+        
+        switch completed {
+        case 0:
+            return "¡Empieza tu día!"
+        case 1:
+            return "¡Buen inicio!"
+        case 2:
+            return "¡Vas muy bien!"
+        case 3:
+            return "¡Casi lo tienes!"
+        case total:
+            return "¡Día completado!"
+        default:
+            return "¡Sigue adelante!"
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
                 ScrollView{
+                    VStack {
+                        VStack(alignment: .leading){
                     VStack {
                         HStack {
                             Text(Date.now.formatted(date: .complete, time: .omitted))
@@ -24,66 +86,127 @@ struct VistaDashboard: View {
                             .padding(.top)
                             .padding(.bottom)
                         HStack(alignment: .top){
-                            Image("icoUserMale")
-                            VStack{
-                                Text("!Buen progreso!")
-                                    .font(.title)
+                            Button {
+                                showAvatarPicker = true
+                            } label: {
+                                Image(nombreAvatar)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 150, height: 120)
+                            }
+                            .buttonStyle(.plain)
+                            VStack(alignment: .leading){
+                                Text(motivationalMessage)
+                                    .font(.title2)
                                     .bold()
-                                Text("Este progreso se mide según las emociones que has registrado hoy.")
-                                    .padding(.top, 1)
-                                
+                                VStack(alignment: .leading, spacing: 12) {
+                                    TaskCheckRow(title: "Explorar emociones", description: "(Solo entra a una emoción)", completed: dailyStats.taskExploreEmotionCompleted)
+                                    TaskCheckRow(title: "Analizar una emoción", description: "(Emoción -> Analiza)", completed: dailyStats.taskAnalyzeCompleted)
+                                    TaskCheckRow(title: "Meditar 30 segundos ", description: "(Emoción -> Medita)", completed: dailyStats.taskMeditateCompleted)
+                                    TaskCheckRow(title: "Abrir Dashboard", description: "(Ya estas aquí (^_~)", completed: dailyStats.taskOpenDashboardCompleted)
+                                }
+                                .padding()
+                                .background(Color.white.opacity(0.9))
+                                .cornerRadius(15)
                             }
                         }
-                        Slider(value: $valor,in: 0...100, step: 10)
-                            .tint(Color.customBlue)
-                        Text("tu progreso hoy es del \(Int(valor))%")
+                        .padding(.bottom)
+                        
+                        
+                        
+                        VStack(alignment: .leading) {
+                            ProgressView(value: dailyStats.todayProgress, total: 100)
+                                .tint(Color.customBlue)
+                                .scaleEffect(x: 1, y: 2, anchor: .center)
+                            Text("\(Int(dailyStats.todayProgress))% completado (\(dailyStats.todayTasksCompleted)/\(dailyStats.totalTasks) objetivos)")
+//                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.top, 5)
+                        }
                     }
                     .padding()
-                    
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 30)
-                            .fill(Color.customGreen.gradient)
-                            .frame(height: 700)
-                        VStack(alignment: .leading){
-                            let columnas = [
-                                GridItem(.flexible(), spacing: 20),
-                                GridItem(.flexible(), spacing: 20)
-                            ]
                             
-                            LazyVGrid(columns: columnas, spacing: 10) {
-                                Button{
-                                    mostrarModal = true
-                    //                tag = TagID(id: 1)
-                                } label: {
-                                    SquareButton(image: "icoSun", text: "Tu registro de emociones", color: Color.customBlue)
+                            VStack{
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Accesos por día")
+                                        .font(.headline)
+                                    
+                                    if dailyStats.recentAccessStats.isEmpty {
+                                        Text("Aún no hay datos.")
+                                            .foregroundStyle(.secondary)
+                                    } else {
+                                        Chart(dailyStats.recentAccessStats) { item in
+                                            BarMark(
+                                                x: .value("Día", item.date, unit: .day),
+                                                y: .value("Accesos", item.accessCount)
+                                            )
+                                            .foregroundStyle(Color.customBlue)
+                                        }
+                                        .frame(height: 160)
+                                    }
                                 }
-                                Button{
-                                    mostrarModal = true
-                    //                tag = TagID(id: 1)
-                                } label: {
-                                    SquareButton(image: "icoSun", text: "Tu registro de malestar", color: Color.customBlue)
+                                .padding(.vertical, 20)
+                                
+                                Divider()
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 30)
+                                
+                                let columnas = [
+                                    GridItem(.flexible(), spacing: 10),
+                                    GridItem(.flexible(), spacing: 10)
+                                ]
+                                
+                                LazyVGrid(columns: columnas, spacing: 10) {
+                                    NavigationLink {
+                                        VistaRegistroEmociones(uid: uid)
+                                    } label: {
+                                        SquareButton(image: "icoSun", text: "Registro de emociones", color: Color.customBlue)
+                                    }
+                                    NavigationLink {
+                                        VistaListaRegistrosMalestar(uid: uid)
+                                    } label: {
+                                        SquareButton(image: "icoSun", text: "Registro de situación", color: Color.customBlue)
+                                    }
+                                    NavigationLink {
+                                        VistaListaProsContras(uid: uid)
+                                    } label: {
+                                        SquareButton(image: "icoSun", text: "Resgistro de Pros y Contras", color: Color.customBlue)
+                                    }
                                 }
                             }
-                            .sheet(isPresented: $mostrarModal){
-//                                VistaRegistroMalestar(emocion:emocion)
-                                Text("aqui la vista a mostrar")
-                            }
-                            Spacer()
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .fill(Color.customYellow.gradient)
+                            )
+                            
+                        
+
+                            
+                            
+                            
+                            
                         }
-                        .padding(40)
                     }
                 }
-                .padding(.top, 90)
+                .padding(.top, 100)
                 .navigationTitle("Dashboard")
-        } // VStack principal
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.gray.opacity(0.5))
         .ignoresSafeArea()
-        
-            
+        .onAppear {
+            dailyStats.markTask(uid: uid, task: .didOpenDashboard)
+            dailyStats.listenToday(uid: uid)
+            dailyStats.listenRecentAccess(uid: uid)
+        }
+        .sheet(isPresented: $showAvatarPicker) {
+            AvatarPickerView()
+        }
     }
 }
 
 #Preview {
-    VistaDashboard()
+    VistaDashboard(uid: "preview-uid")
 }

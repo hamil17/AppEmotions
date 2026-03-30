@@ -7,9 +7,15 @@
 
 import SwiftUI
 
+struct TagIDGestion: Identifiable {
+    let id: Int
+}
+
 struct EmocionGestionala: View {
     @State private var mostrarModal = false
+    @State private var tag: TagIDGestion?
     
+    let uid: String
     var emocion: Emocion
     
     var body: some View {
@@ -21,18 +27,32 @@ struct EmocionGestionala: View {
         LazyVGrid(columns: columnas, spacing: 10) {
             Button{
                 mostrarModal = true
-//                tag = TagID(id: 1)
+                tag = TagIDGestion(id: 1)
             } label: {
-                SquareButton(image: "icoSun", text: "Registro de malestar (Lowlights)", color: Color.customGreen)
+                SquareButton(image: "icoRegistro", text: "Registro de situación", color: Color.customGreen)
+            }
+            Button{
+                mostrarModal = true
+                tag = TagIDGestion(id: 2)
+            } label: {
+                SquareButton(image: "icoProContra", text: "Registro de Pros / Contras", color: Color.customGreen)
             }
         }
-        .sheet(isPresented: $mostrarModal){
-            VistaRegistroMalestar(emocion:emocion)
-        }
+//        .sheet(isPresented: $mostrarModal){
+//            VistaRegistroMalestar(uid: uid, emocion: emocion)
+//        }
+        .sheet(item: $tag, content: { item in
+            if item.id == 1 {
+                VistaRegistroMalestar(uid: uid, emocion: emocion)
+            }
+            if item.id == 2 {
+                VistaProContra(uid: uid, emocion: emocion)
+            }
+        })
         Spacer()
     }
 }
 
 #Preview {
-    EmocionGestionala(emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
+    EmocionGestionala(uid: "preview-uid", emocion: Emocion(nombre: "Alegría", descripcion: "Esto es una emoción de prueba para ver cómo se ve en pantalla, y hasta cambiar su color o hasta donde llega su altura, y si se puede hacer clic en ella para que cambie de color", color: "yellow", image: "Alegria", sonido: "https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/O79ZY14E9GATF7Sz92LcG7KN6HKcYODhku3yPmiz.mp3"))
 }

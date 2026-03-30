@@ -11,6 +11,8 @@ import FirebaseAuth
 @Observable
 class LoginViewModel {
     var user: User? // tipo de variable de firebase
+
+    var uid: String? { user?.uid }
     
     init() {
         // Asigna el ususrio a si hay sesión guardada
